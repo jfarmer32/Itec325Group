@@ -14,12 +14,12 @@ This is the repository for require_once(teamname.php);
 ## Testing
 
 ### Coding standards
-  - All files should contain the following comment block:\
+  - All files should contain the following comment block:\<code>
     /*  Group: require_once(teamname.php);
      *  Last edited: [The current date] [The version]
      *  Last edited by: [The programmer editing]
      *  Purpose: [Short discription of the file]\
-     */
+     */</code>
   - All functions should be preceded by a comment containing:\
     /* Signature: [function-name] : [param-1] [param-2]...[param-N] -> [return]
      * Purpose: (Short discription of function purpose)
