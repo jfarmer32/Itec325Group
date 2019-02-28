@@ -4,7 +4,7 @@ This is the repository for require_once(teamname.php);
 ## Team members
   - Benjamin Lichtman
   - Joe Sullivan
-  - Chase Kuehn
+  - Chase Kuehn: CKuehn3
   - Justin Farmer
 
 ### Getting started
