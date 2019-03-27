@@ -1,10 +1,9 @@
 <?php
-/*  @group require_once(teamname.php);
-*   @author Justin Farmer, [Add name before pushing back]
-*   @course itec325-2019spring
-*   @assignment 325 Group Project
-*
-* This is the Admin Page, where admin can do admin things
+/*
+Group: require_once(teamname.php);
+Last edited: 03/27/2019 (V1.1)
+Last edited by: Benjamin balichtman
+Purpose: provide utility functions for the grid-link project
 */
 error_reporting(E_ALL);
 
@@ -21,6 +20,26 @@ function asUL($listItems) {
 
   return "\n<ul>\n$liSoFar</ul>";
 }
+
+
+/**
+ * makeGridElement returns the HTML for an image that links to a URL
+ * @param  $imageURL the URL to use for the image
+ * @param  $linkURL the URL to use for the image link
+ * @return $htmlSTR the string for an HTML image that links to a URL
+ */
+function makeGridElement($imageURL, $linkURL)
+{
+  $htmlSTR="";
+  $htmlSTR.="<a href='".$linkURL."'>"
+          ."  <img border='0' alt='Absolute Unit' src='".$imageURL."' width='200' height='200'>"
+          ."</a>";
+  return $htmlSTR;
+}
+
+
+
+
 
 /* stripWhitespace strips whitespace from a string
 * @param $string The string to be stripped
@@ -80,32 +99,37 @@ function test($actual, $expect, $normalize = false) {
 * @return void
 * testResults : string[] -> void
 */
-function testResults($results, $printAllTests) {
+function testResults($results, $printAllTests)
+{
   $failed = $total = 0;
-
-  foreach($results AS $test => $result) {
+  foreach($results AS $test => $result)
+  {
     ++$total;
-
-    if($printAllTests === true) {
-       if($result === "Pass")
-          echo "\nTest# $total : $test => Pass";
-       else {
-          echo "\n\nTest# $total : $test => *Fail*\n"
+    if($printAllTests === true)
+    {
+      if($result === "Pass")
+      {
+        echo "\nTest# $total : $test => Pass";
+      }
+      else
+      {
+        echo "\n\nTest# $total : $test => *Fail*\n"
              . "\n > $test failed:\n$result";
-          ++$failed;
-       }
-
-    } else if($printAllTests === false && $result !== "Pass") {
         ++$failed;
-        echo "\n > $test failed:\n$result";
+      }
+    }
+    else if($printAllTests === false && $result !== "Pass")
+    {
+      ++$failed;
+      echo "\n > $test failed:\n$result";
     }
   }
-          echo "\n-------Summary--------";
-          echo "\n > $total tests run.";
-          echo  ($failed === 0)
-                 ? "\n > All test passed!\n"
-                 : "\n > $failed test failed.\n";
-          echo "----------------------\n";
-  }
+  echo "\n-------Summary--------";
+  echo "\n > $total tests run.";
+  echo  ($failed === 0)
+         ? "\n > All test passed!\n"
+         : "\n > $failed test failed.\n";
+  echo "----------------------\n";
+}
 
   ?>
