@@ -19,7 +19,10 @@ $body = "The FitnessGram™ Pacer Test is a multistage aerobic capacity test tha
   </head>
 
   <body>
-    <?php require_once("header.php"); ?>
+    <?php echo makeHeader(array("left" => makeImgGrid("square.jpeg", 11, 6),
+                                "center" => "<h1>Grid-Links</h1>",
+                                "right" => asUL(array("Help", "Settings", "Logout"))));
+                           ?>
 
     <div class="aboveContentLeft">Admin _______</div>
     <div class="aboveContentRight">Date/Time</div>
@@ -33,9 +36,11 @@ $body = "The FitnessGram™ Pacer Test is a multistage aerobic capacity test tha
       <div>Created in the past week<input name='filter3'type='radio' value='Filter3' /></div>
       <div>Display all columns<input name='filter4'type='checkbox' value='Filter4' /></div>
       <div>Some other filter<input name='filter5'type='checkbox' value='Filter5' /></div>
+      <div>Another filter<input name='filter6' type='checkbox' value='Filter6' /></div>
+      <div>Another filter 2<input name='filter7' type='checkbox' value='Filter7' /></div>
     </div>
-    <div class="bottomAdminContainer" >
-      <?php echo $body ?>
+    <div class="bottomAdminContainer">
+        <?php echo $body ?>
     </div>
   </body>
 </html>

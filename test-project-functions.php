@@ -3,6 +3,47 @@ error_reporting(E_ALL);
 require_once("project-functions.php");
 
 $testing = array(
+  "DWND 0.0" => test( divWithNestedDivs("wrapper", array()),
+                                        false),
+  "DWND 1.0" => test( divWithNestedDivs("someClass",
+                                        array("newClass" => "Content")),
+                            "<div class='someClass'>\n"
+                          . "  <div class='newClass'>Content</div>\n"
+                          . "</div>"),
+  "DWND 2.0" => test( divWithNestedDivs("parentClass",
+                                        array("class1" => "Content",
+                                              "class2" => "Image",
+                                              "class3" => "Unordered List")),
+                        "<div class='parentClass'>\n"
+                      . "  <div class='class1'>Content</div>\n"
+                      . "  <div class='class2'>Image</div>\n"
+                      . "  <div class='class3'>Unordered List</div>\n"
+                      . "</div>"),
+
+  "MH 0.0" => test( makeHeader(array()), false),
+  "MH 1.0" => test( makeHeader(array("class1" => "Content")),
+                            "<div class='header'>\n"
+                          . "  <div class='class1'>Content</div>\n"
+                          . "</div>"),
+  "MH 2.0" => test( makeHeader(array("class1" => "Content",
+                                     "class2" => "Image",
+                                     "class3" => "Unordered List")),
+                            "<div class='header'>\n"
+                          . "  <div class='class1'>Content</div>\n"
+                          . "  <div class='class2'>Image</div>\n"
+                          . "  <div class='class3'>Unordered List</div>\n"
+                          . "</div>"),
+
+  "asUL 0.0" => test( asUL(array()), "<ul>\n</ul>"),
+  "asUL 1.0" => test( asUL(array("SPARTA")), "<ul>\n  <li>SPARTA</li>\n</ul>"),
+  "asUL 2.0" => test( asUL(array("THIS", "IS", "AN", "UNORDERED LIST")),
+                          "<ul>\n"
+                          . "  <li>THIS</li>\n"
+                          . "  <li>IS</li>\n"
+                          . "  <li>AN</li>\n"
+                          . "  <li>UNORDERED LIST</li>\n"
+                          . "</ul>"),
+
   "SWS 0.0" => test( stripWhitespace(""), ""),
   "SWS 1.0" => test( stripWhitespace("A"), "A"),
   "SWS 1.1" => test( stripWhitespace("\nApple\n"), "Apple"),
@@ -26,15 +67,10 @@ $testing = array(
                                            "Should" => "Quit")),
                                          "\nCan't: Stop\nWon't: Stop,\nShould: Quit"),
 
-  "asUL 0.0" => test( asUL(array()), "\n<ul>\n</ul>"),
-  "asUL 1.0" => test( asUL(array("SPARTA")), "\n<ul>\n  <li>SPARTA</li>\n</ul>"),
-  "asUL 2.0" => test( asUL(array("THIS", "IS", "AN", "UNORDERED LIST")),
-                          "\n<ul>\n"
-                          . "  <li>THIS</li>\n"
-                          . "  <li>IS</li>\n"
-                          . "  <li>AN</li>\n"
-                          . "  <li>UNORDERED LIST</li>\n"
-                          . "</ul>")
+  "MIG 0.0" => test( makeImgGrid("square.jpeg", 0, 0), false),
+  "MIG 0.1" => test( makeImgGrid("square.jpeg", 1, 0), false),
+  "MIG 0.2" => test( makeImgGrid("square.jpeg", 0, 1), false),
+
                     );
 testResults($testing, false);
 ?>

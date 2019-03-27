@@ -8,6 +8,62 @@
 */
 error_reporting(E_ALL);
 
+/* AsAttrs takes in an array of strings (each key is also a string)
+  *   and returns one string that is the attribute-value pairs seperated by an
+  *   "=", with the values in 'single quotes'.
+  * @param $attrValues The attribute(as the key) value pairs being returned
+  *   as a string.
+  * @return A string containing the HTML tags as attributes-and-values.
+  * asAttrs : string[] -> string
+  */
+function asAttrs($attrValues) {
+    $AVPairs = "";
+
+    if(sizeof($attrValues) !== 0) {
+    foreach($attrValues AS $attr => $attrValue) {
+      $AVPairs .= "$attr='$attrValue' ";
+    }
+    }
+    else
+      return false;
+
+    return substr($AVPairs, 0, strlen($AVPairs) - 1);
+  }
+/**
+ * divWithNestedDivs takes in a wrapper class name, and an array of contents
+ *  where each key-value entry is a class(key) => content(value)
+ * @param  [String] $wrapperClass the parent class that will wrap
+ *  the child divs
+ * @param  [String[]] $divContents key-value pairs for the child divs
+ *  the key is the child's class, the value is the childs content
+ * @return [String-or-false] Returns the HTML string for a div with
+ *  nested divs
+ * Returns false is the given array is empty
+ */
+function divWithNestedDivs( $wrapperClass, $divContents ) {
+  $divsSoFar = "";
+
+  if(sizeof($divContents) !== 0) {
+  foreach($divContents AS $childClass => $divContent)
+    $divsSoFar .= "  <div class='$childClass'>$divContent</div>\n";
+  }
+  else
+    return false;
+
+  return "<div class='$wrapperClass'>\n$divsSoFar</div>";
+}
+
+/**
+ * makeHeader calls divWithNestedDivs, and sets the parent class to be header
+ * @param  [String[]] $contents the array key-value pairs containing the div
+ *         contents.
+ * @return [String-or-false] Returns false is the given array is empty
+ * Returns the HTML for a header
+ */
+function makeHeader( $contents ) {
+  return divWithNestedDivs("header", $contents);
+}
+
 /**
  * asUL takes in an array of strings and returns those stings in a UL
  * @param  [array] $listItems the array containing the list items
@@ -19,7 +75,37 @@ function asUL($listItems) {
   foreach($listItems AS $listItem)
     $liSoFar .= "  <li>$listItem</li>\n";
 
-  return "\n<ul>\n$liSoFar</ul>";
+  return "<ul>\n$liSoFar</ul>";
+}
+
+/** Crude potential grid function
+ * makeImgGrid turns a image into a grid of that image
+ * @param  [String] $gridBlock the link to the image to be turned into a grid
+ * @param  [non-negative-real] $width how many blocks wide
+ * @param  [non-negative-real] $height how many blacks tall
+ * @return [String] the html string for grid of images
+ */
+function makeImgGrid($gridBlock, $width, $height) {
+  $gridCol = "  <div class='column'>\n"
+           . "    <img src=$gridBlock alt='Cell' style='width:100%'>\n"
+           . "  </div>\n";
+
+  $gridRow = "<div class='row'>\n";
+
+  if($width > 0 && $height > 0) {
+    for($i=0;$i<$width; $i++)
+      $gridRow .= $gridCol . " ";
+
+      $gridRow .= "\n</div>";
+      $grid = "";
+
+      for($j=0;$j<$height; $j++)
+      $grid .= $gridRow . "\n";
+    }
+    else
+      return false;
+
+  return "<div class='gridLinkWrapper'>\n$grid</div>";
 }
 
 /* stripWhitespace strips whitespace from a string
