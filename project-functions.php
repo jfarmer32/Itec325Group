@@ -19,7 +19,7 @@ function asUL($listItems) {
   foreach($listItems AS $listItem)
     $liSoFar .= "  <li>$listItem</li>\n";
 
-return "\n<ul>\n$liSoFar</ul>";
+  return "\n<ul>\n$liSoFar</ul>";
 }
 
 /* stripWhitespace strips whitespace from a string
