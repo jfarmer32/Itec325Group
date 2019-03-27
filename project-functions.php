@@ -1,8 +1,8 @@
 <?php
 /*
 Group: require_once(teamname.php);
-Last edited: 03/27/2019 (V1.1)
-Last edited by: Benjamin balichtman
+Last edited: 03/27/2019 (V1.2)
+Last edited by: Justin Farmer
 Purpose: provide utility functions for the grid-link project
 */
 error_reporting(E_ALL);

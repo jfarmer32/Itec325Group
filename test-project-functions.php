@@ -1,4 +1,11 @@
 <?php
+/*
+Group: require_once(teamname.php);
+Last edited: 03/27/2019 (V1.4)
+Last edited by: Justin Farmer
+Purpose: This is file contains the test cases for the functions found in
+  project-functions.php
+*/
 error_reporting(E_ALL);
 require_once("project-functions.php");
 
