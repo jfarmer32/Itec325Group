@@ -1,0 +1,146 @@
+/*  @group require_once(teamname.php);
+*   @author Justin Farmer
+*   @course itec325-2019spring
+*   @assignment 325 Group Project
+*
+* This is a basic styleSheet
+*/
+/*
+table {
+  border: 1px solid black;
+}
+th, td {
+  text-align: left;
+  font-family: verdana;
+}
+h1 {
+  color: #808080;
+  text-shadow: 1px 1px black;
+  text-align: center;
+  border: 3px solid #808080;
+  padding: 10px;
+  border-radius: 5%;
+  font-family: verdana;
+}
+h2 {
+  text-align: center;
+  font-style: italic;
+  font-family: verdana;
+}
+h3 {
+  font-family: verdana;
+}
+p {
+  font-family: verdana;
+}
+img {
+  border-radius: 7%;
+}
+.center {
+  margin: auto;
+  width: 60%;
+  border: 3px solid #808080;
+  padding: 10px;
+  border-radius: 5%;
+}
+.borderless {
+  border: 0px;
+}
+*/
+body {
+  background-color: #6699ff;
+  margin: 0px;
+  padding:0px;
+  font-size: 30px;
+  font-family: 'PT Sans Narrow', sans-serif;
+}
+
+.header {
+  border-bottom: 5px solid black;
+  font-size: 50px;
+  width:100%;
+  height:100px;
+  overflow: hidden;
+}
+
+.center {
+    float: left;
+    width:1200px;
+    height:100px;
+    background-color: green;
+}
+
+.left, .right {
+    height:100px;
+    width:50%;
+}
+
+.right {
+    float: right;
+    background-color: red;
+    margin-right: -600px;
+}
+
+.left {
+    float: left;
+    background-color: blue;
+    margin-left: -600px;
+    text-align: right;
+}
+
+.aboveContentLeft {
+  margin-top: 40px;
+  float: left;
+  margin-left: 100px;
+}
+
+.aboveContentRight {
+  margin-top: 40px;
+  float: right;
+  margin-right: 100px;
+}
+
+.adminGridContainer {
+  border: 3px solid;
+  border-color: black;
+  padding:10px;
+  width: 90%;
+  height: 200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 10px;
+  background-color: red;
+  margin-top: 10px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.adminGridContainer > div {
+  background-color: green;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 30px;
+}
+
+.bottomAdminContainer {
+  border: 3px solid;
+  border-color: black;
+  background-color: white;
+  padding:10px;
+  margin: auto;
+  width: 90%;
+  height: auto;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+input[type=submit]{ /* <---- Input of Type Submit */
+	background-color: darkblue;
+	border: 5px solid black;
+	color: white;
+	padding: 8px 16px;
+	font-size: 30px;
+	cursor: pointer;
+	border-radius: 8px;
+}
