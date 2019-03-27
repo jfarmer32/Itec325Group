@@ -47,6 +47,9 @@ img {
   border: 0px;
 }
 */
+
+/***************************************************/
+/* default, if no class is specified */
 body {
   background-color: #6699ff;
   margin: 0px;
@@ -55,7 +58,23 @@ body {
   font-family: 'PT Sans Narrow', sans-serif;
 }
 
-.header {
+input[type=submit] { /* <---- Input of Type Submit */
+	background-color: darkblue;
+	border: 5px solid black;
+	color: white;
+	padding: 8px 16px;
+	font-size: 30px;
+	cursor: pointer;
+	border-radius: 8px;
+}
+
+ul {
+  font-size: 20px;
+}
+
+/***************************************************/
+/* header classes */
+.header { /* Wrapper */
   border-bottom: 5px solid black;
   font-size: 50px;
   width:100%;
@@ -67,6 +86,7 @@ body {
     float: left;
     width:1200px;
     height:100px;
+    text-align: center;
     background-color: green;
 }
 
@@ -88,18 +108,24 @@ body {
     text-align: right;
 }
 
-.aboveContentLeft {
+/***************************************************/
+/* classes for area above content */
+.aboveContentRight, .aboveContentLeft {
   margin-top: 40px;
+}
+
+.aboveContentLeft {
   float: left;
   margin-left: 100px;
 }
 
 .aboveContentRight {
-  margin-top: 40px;
   float: right;
   margin-right: 100px;
 }
 
+/***************************************************/
+/* classes for admin content */
 .adminGridContainer {
   border: 3px solid;
   border-color: black;
@@ -133,14 +159,4 @@ body {
   height: auto;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-}
-
-input[type=submit]{ /* <---- Input of Type Submit */
-	background-color: darkblue;
-	border: 5px solid black;
-	color: white;
-	padding: 8px 16px;
-	font-size: 30px;
-	cursor: pointer;
-	border-radius: 8px;
 }
