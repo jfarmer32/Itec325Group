@@ -1,0 +1,6 @@
+Summary of progress - require_once(teamname.php); - Benjamin Lichtman
+	I have been working on a draft of the landing page. This landing page
+was previously a stub that simply included sample text. The page now shows a
+header that is implemented using our header.php file. The landing page also now shows sample content 'grid links' that are the central user focus of the site. 
+These 'grid links' are fully functional the way they are intended to be in the 
+final product, although implementing these with the database will be critical.
