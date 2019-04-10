@@ -28,6 +28,21 @@ function asAttrs($attrValues) {
 
     return substr($AVPairs, 0, strlen($AVPairs) - 1);
   }
+
+  /* hyperlink returns a string of HTML for a hyperlink.
+  * @param $url The URL to be linked too
+  * @param $linkTxt The name of the link, either a string
+  *                 or false(meaning no link was entered)
+  * @return The HTML string containing the link to the URL
+  * hyperlink : string, string -> string
+  */
+  function hyperlink($url, $linkTxt, $class) {
+    if ($linkTxt === false) //If no link text specified, then default to URL
+      $linkTxt = $url;
+
+    return "<a class='$class' href='$url' $addAttrs>$linkTxt</a>";
+  }
+
 /**
  * divWithNestedDivs takes in a wrapper class name, and an array of contents
  *  where each key-value entry is a class(key) => content(value)
