@@ -1,0 +1,13 @@
+Summary of progress - require_once(teamname.php) - Justin Farmer
+    I have been working with our 'admin-page.php', 'header.php', 'basic.css',
+  'project-functions.php', and 'test-project-functions.php files'. Project-functions.php
+  and test-project-functions.php will serve as our function and test-function files
+  throughout the project. 'header.php' is the header that will appear on all pages,
+  however, since the header present on each page will have slightly different variants
+  for each page, a header function has been included in 'project-functions.php'.
+  'admin-page.php' will serve as the page for admin, where they can view and modify
+  the database. A CSS file, 'basic.css', has been started, and will contain all external
+  CSS for our system. Some problems encountered: need header to change dynamically,
+  (fixed with function), issues with displaying images dynamically as a grid
+  (have working function to fix, needs improving), CSS keeps breaking the pages
+  (fixed with CSS that hasn't broke, yet).

@@ -8,6 +8,7 @@ Purpose: This page will serve as our landing page.
 ?>
 <html>
   <head>
+    <link rel="stylesheet" href="basic.css">
     <title>Grid-links</title>
     <?php
       require_once('header.php');
@@ -15,8 +16,6 @@ Purpose: This page will serve as our landing page.
     ?>
   </head>
   <body>
-
-    <h1>This is a basic landing page.</h1>
     <p>
       <?php
         $bensContent=array("https://benlichtman.com"=>"https://i.redd.it/o5eo1p0kawn11.png"
