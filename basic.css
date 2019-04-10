@@ -72,6 +72,7 @@ ul {
   font-family: courier;
   list-style: none;
   padding: 0px;
+  padding-left: 50px;
 }
 
 li {
@@ -86,36 +87,45 @@ a {
 /***************************************************/
 /* header classes */
 .header { /* Wrapper */
-  border-bottom: 5px solid #FFF8E7; /* cosmic latte */
   width:100%;
   height:121px;
-  overflow: hidden;
+  /*overflow: hidden;*/
+  background-color: #2176ff;
+  border-bottom: 3px solid #FFF8E7;
 }
 
 .center {
     float: left;
-    width:1000px;
+    width:70%;
     height:121px;
     text-align: center;
-    background-color: #2176ff;
 }
 
 .left, .right {
     height:121px;
-    background-color: #2176ff;
-    width:50%;
 }
 
 .right {
     float: right;
-    margin-right: -500px;
+    /* margin-right: -500px; */
     text-align: left;
+    background-color: #002266;
+    border-top-left-radius: 25%;
+    border-bottom-left-radius: 25%;
+    width: 12.5%;
+    border-left: 3px solid white;
+    border-bottom: 3px solid white;
+    box-shadow: -1px -1px 10px grey;
+    position: fixed;
+    right: 0;
 }
 
 .left {
     float: left;
-    margin-left: -500px;
+    /* margin-left: -500px; */
     text-align: right;
+    background-color: #FFF8E7;
+    width: 17.5%;
 }
 
 h1 {
@@ -143,6 +153,7 @@ h1 {
 .aboveContentRight {
   float: right;
   margin-right: 100px;
+  color: white;
 }
 
 /***************************************************/

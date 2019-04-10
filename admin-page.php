@@ -15,10 +15,11 @@ $body = "The FitnessGram™ Pacer Test is a multistage aerobic capacity test tha
   <head>
     <title><?php echo $title ?></title>
     <link rel='stylesheet' type='text/css' href='basic.css'>
+    <script src="project-scripts.js"></script>
   </head>
 
-  <body>
-    <?php echo makeHeader(array("left" => makeImgGrid("square.jpeg", 11, 6),
+  <body onload="startTime()">
+    <?php echo makeHeader(array("left" => makeImgGrid("images/square.jpeg", 11, 6),
                                 "center" => "<h1>Grid-Links</h1>",
                                 "right" => asUL(array(hyperlink("https://www.w3schools.com/css/css_link.asp",
                                                                 "Help",
@@ -32,7 +33,8 @@ $body = "The FitnessGram™ Pacer Test is a multistage aerobic capacity test tha
                            ?>
 
     <div class="aboveContentLeft">Admin _______</div>
-    <div class="aboveContentRight">Date/Time</div>
+
+    <div class="aboveContentRight" id="time">Time:</div>
 
     <div class="adminGridContainer">
       <?php echo adminGridRow(array("cell1" => array("name" => "viewUsers",
