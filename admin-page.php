@@ -19,7 +19,7 @@ $body = "The FitnessGram™ Pacer Test is a multistage aerobic capacity test tha
   </head>
 
   <body onload="startTime()">
-    <?php echo makeHeader(array("left" => makeImgGrid("images/square.jpeg", 11, 6),
+    <?php echo makeHeader(array("left" => makeImgGrid("square.jpeg", 11, 6),
                                 "center" => "<h1>Grid-Links</h1>",
                                 "right" => asUL(array(hyperlink("https://www.w3schools.com/css/css_link.asp",
                                                                 "Help",
