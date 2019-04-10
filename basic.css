@@ -50,7 +50,7 @@ img {
 /***************************************************/
 /* default, if no class is specified */
 body {
-  background-color: #062830;
+  background-color: #001133;
   margin: 0px;
   padding:0px;
   font-size: 30px;
@@ -68,45 +68,46 @@ input[type=submit] { /* <---- Input of Type Submit */
 }
 
 ul {
-  font-size: 25px;
+  font-size: 20px;
   font-family: courier;
   list-style: none;
   text-shadow: 2px 2px black;
   color: darkgray;
-  padding-bottom: 10px;
+  padding: 0px;
 }
 
 /***************************************************/
 /* header classes */
 .header { /* Wrapper */
-  border-bottom: 5px solid black;
+  border-bottom: 5px solid #FFF8E7; /* cosmic latte */
   width:100%;
-  height:125px;
+  height:121px;
   overflow: hidden;
 }
 
 .center {
     float: left;
-    width:1200px;
-    height:125px;
+    width:1000px;
+    height:121px;
     text-align: center;
-    background-color: #1393af;
+    background-color: #2176ff;
 }
 
 .left, .right {
-    height:125px;
-    background-color: #1393af;
+    height:121px;
+    background-color: #2176ff;
     width:50%;
 }
 
 .right {
     float: right;
-    margin-right: -600px;
+    margin-right: -500px;
+    text-align: left;
 }
 
 .left {
     float: left;
-    margin-left: -600px;
+    margin-left: -500px;
     text-align: right;
 }
 
@@ -115,7 +116,7 @@ h1 {
   text-shadow: 3px 3px black;
   color: darkgray;
   text-align: center;
-  font-size: 350%;
+  font-size: 300%;
   margin: 0px;
   padding: 0px;
 }
@@ -184,7 +185,7 @@ h1 {
 
 .column {
   float: left;
-  width: 21px;
+  width: 8%;
   padding: 1px;
   border: 1px solid black;
   border-radius: 10%;

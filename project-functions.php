@@ -52,6 +52,28 @@ function divWithNestedDivs( $wrapperClass, $divContents ) {
   return "<div class='$wrapperClass'>\n$divsSoFar</div>";
 }
 
+function adminGridCell( $attrs ) {
+
+  if(sizeof($attrs) === 0)
+    return false;
+  else
+    $cellAttrs = asAttrs($attrs);
+
+  return "<div><input $cellAttrs /></div>\n";
+}
+
+function adminGridRow( $cellAttrs ) {
+  $rowSoFar = "";
+
+  if(sizeof($cellAttrs) === 0)
+    return false;
+  else {
+    foreach($cellAttrs AS $cellAttr)
+      $rowSoFar .= adminGridCell($cellAttr);
+  }
+
+  return $rowSoFar;
+}
 /**
  * makeHeader calls divWithNestedDivs, and sets the parent class to be header
  * @param  [String[]] $contents the array key-value pairs containing the div

@@ -27,16 +27,32 @@ $body = "The FitnessGram™ Pacer Test is a multistage aerobic capacity test tha
     <div class="aboveContentRight">Date/Time</div>
 
     <div class="adminGridContainer">
-      <div><input name='viewUsers' type='submit' value='View Users' /></div>
-      <div><input name='viewContent' type='submit' value='View Content' /></div>
-      <div><input name='viewSomethingElse' type='submit' value='View Something' /></div>
-      <div>Older than 1 year<input name='filter1'type='radio' value='Filter1' /></div>
-      <div>Older than 6 months<input name='filter2'type='radio' value='Filter2' /></div>
-      <div>Created in the past week<input name='filter3'type='radio' value='Filter3' /></div>
-      <div>Display all columns<input name='filter4'type='checkbox' value='Filter4' /></div>
-      <div>Some other filter<input name='filter5'type='checkbox' value='Filter5' /></div>
-      <div>Another filter<input name='filter6' type='checkbox' value='Filter6' /></div>
-      <div>Another filter 2<input name='filter7' type='checkbox' value='Filter7' /></div>
+      <?php echo adminGridRow(array("cell1" => array("name" => "viewUsers",
+                                                     "type" => "submit",
+                                                     "value" => "View Users"),
+                                    "cell2" => array("name" => "viewContent",
+                                                     "type" => "submit",
+                                                     "value" => "View Content"),
+                                    "cell3" => array("name" => "viewSomethingElse",
+                                                     "type" => "submit",
+                                                     "value" => "View Something"),
+                                    "cell4" => array("name" => "filter1",
+                                                     "type" => "radio",
+                                                     "value" => "Filter1"),
+                                    "cell5" => array("name" => "filter2",
+                                                     "type" => "radio",
+                                                     "value" => "Filter2"),
+                                    "cell6" => array("name" => "filter3",
+                                                     "type" => "radio",
+                                                     "value" => "Filter3"),
+                                    "cell7" => array("name" => "filter4",
+                                                     "type" => "checkbox",
+                                                     "value" => "Filter4"),
+                                    "cell8" => array("name" => "filter5",
+                                                     "type" => "checkbox",
+                                                     "value" => "Filter5"),
+                                                   )) ?>
+
     </div>
     <div class="bottomAdminContainer">
         <?php echo $body ?>

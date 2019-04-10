@@ -78,6 +78,28 @@ $testing = array(
   "MIG 0.1" => test( makeImgGrid("square.jpeg", 1, 0), false),
   "MIG 0.2" => test( makeImgGrid("square.jpeg", 0, 1), false),
 
+  "AGC 0.0" => test( adminGridCell(array()), false),
+  "AGC 1.0" => test( stripWhitespace(adminGridCell(array("class" => "class1"))),
+                     stripWhitespace("<div><input class='class1' /></div>\n")),
+  "AGC 2.0" => test( stripWhitespace(adminGridCell(array("class" => "class1",
+                                                         "name" => "cell1",
+                                                         "value" => "someValue",
+                                                         "other" => "thing"))),
+                     stripWhitespace("<div><input class='class1' name='cell1' value='someValue' other='thing' /></div>\n")),
+
+  "AGR 0.0" => test( adminGridRow(array()), false),
+  "AGR 1.0" => test( stripWhitespace(adminGridRow(array("cell1" => array("class" => "class1")))),
+                     stripWhitespace("<div><input class='class1' /></div>\n")),
+  "AGR 2.0" => test( stripWhitespace(adminGridRow(array("cell1" => array("class" => "class1",
+                                                                         "name" => "cell1",
+                                                                         "value" => "someValue",
+                                                                         "other" => "thing"),
+                                                        "cell2" => array("class" => "class2",
+                                                                         "name" => "cell2",
+                                                                         "value" => "someValue2",
+                                                                         "other" => "thing2")))),
+                     stripWhitespace("<div><input class='class1' name='cell1' value='someValue' other='thing' /></div>\n"
+                                  .  "<div><input class='class2' name='cell2' value='someValue2' other='thing2' /></div>\n")),
                     );
 testResults($testing, false);
 ?>
