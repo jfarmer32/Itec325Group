@@ -114,5 +114,4 @@ function usernameValidate(input) {
 
 function passwordValidate(input) {
 
-
 }

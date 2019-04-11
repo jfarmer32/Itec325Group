@@ -203,7 +203,6 @@ function makeGridElement($imageURL, $linkURL=false)
   return $htmlSTR;
 }
 
-
 /* resetArrayIndices takes in an array and returns that array with
 *    it's indices reset to be numeric, starting at 0
 * @param $contents The array whose indices are being reset
