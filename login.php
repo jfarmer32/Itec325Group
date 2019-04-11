@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-	<link rel="stylesheet" href="basic.css">
+
     <meta charset="utf-8">
     <title>Login</title>
 	<?php
@@ -11,10 +11,10 @@
   <body>
 	<form>
 		Username:<br>
-		<input type="text" name="username">
+		<input type="text" name="username" required>
 		<br>
 		Password:<br>
-		<input type = "text" name="password">
+		<input type = "text" name="password" required>
 		<br><br>
 		<input type="submit" value="Submit">
 	</form>
