@@ -431,33 +431,4 @@ function spacer()
 {
   return "<img src='spacer.png' class='spacer'>";
 }
-/* NEEDS DOCUMENTATION
- *
-*/
-function adminGridCell( $attrs )
-{
-
-  if(sizeof($attrs) === 0)
-    return false;
-  else
-    $cellAttrs = asAttrs($attrs);
-
-  return "<div><input $cellAttrs /></div>\n";
-}
-/* NEEDS DOCUMENTATION
- *
-*/
-function adminGridRow( $cellAttrs )
-{
-  $rowSoFar = "";
-
-  if(sizeof($cellAttrs) === 0)
-    return false;
-  else {
-    foreach($cellAttrs AS $cellAttr)
-      $rowSoFar .= adminGridCell($cellAttr);
-  }
-
-  return $rowSoFar;
-}
 ?>

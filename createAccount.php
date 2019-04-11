@@ -1,22 +1,21 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<script>
-		function usernameValidate(input) {
-		var regex = /[^a-z0-9]/gi;
-		input.value = input.value.replace(regex,"");
-	}
-		function passwordValidate(input) {
-		var regex = /[\\<>'"/?]+/gi;
-		input.value = input.value.replace(regex, "");
-	}
-</script>
+<?php
+	require_once('project-functions.php');
+?>
+<html>
   <head>
 	<link rel="stylesheet" href="basic.css">
     <meta charset="utf-8">
     <title>Create Account</title>
-	<?php
-		require_once('project-functions.php');
-	?>
+		<script>
+				function usernameValidate(input) {
+				var regex = /[^a-z0-9]/gi;
+				input.value = input.value.replace(regex,"");
+			}
+				function passwordValidate(input) {
+				var regex = /[\\<>'"/?]+/gi;
+				input.value = input.value.replace(regex, "");
+			}
+		</script>
   </head>
   <body>
   <p>
@@ -32,6 +31,7 @@
 	 ?>
 	</p>
 	<form>
+	<div style="width:60%; height:auto; margin:auto; color:white">
 		Username:<br>
 		<input type="text" name="username" onkeyup="usernameValidate(this)" required>
 		<br>
@@ -42,6 +42,7 @@
 		<input type = "text" name="cPassword" onkeyup="passwordValidate(this)" required>
 		<br><br>
 		<input type="submit" value="Submit">
+	</div>
 	</form>
 	<br>
 	<span>
@@ -51,4 +52,3 @@
 	</span>
   </body>
 </html>
-
