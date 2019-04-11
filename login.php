@@ -17,5 +17,10 @@
     <br/>
     <a href="admin-page.php">admin page (after successful form submission with administrative credentials)</a>
     <br/>
+	<span>
+		<?php
+			echo contentPane();
+		?>
+	</span>
   </body>
 </html>
