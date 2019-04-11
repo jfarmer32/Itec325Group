@@ -9,6 +9,12 @@
 	?>
   </head>
   <body>
+	<p>
+		<?php
+			echo makeHeader (array("left" => makeImgGrid("sqaure.jpeg", 11, 6),
+								   "center" => "<h1>Login</h1>"));
+		?>
+	</p>
     Login page stub
     <br/>
     <a href="createAccount.php">Create Account</a>
