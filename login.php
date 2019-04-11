@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+	<link rel="stylesheet" href="basic.css">
     <meta charset="utf-8">
     <title>Login</title>
+	<?php
+		require_once('project-functions.php');
+	?>
   </head>
   <body>
     Login page stub
