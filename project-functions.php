@@ -15,7 +15,8 @@ error_reporting(E_ALL);
   * @return A string containing the HTML tags as attributes-and-values.
   * asAttrs : string[] -> string
   */
-function asAttrs($attrValues) {
+function asAttrs($attrValues)
+{
     $AVPairs = "";
 
     if(sizeof($attrValues) !== 0) {
@@ -63,7 +64,6 @@ function divWithNestedDivs( $wrapperClass, $divContents ) {
   }
   else
     return false;
-
   return "<div class='$wrapperClass'>\n$divsSoFar</div>";
 }
 
@@ -128,7 +128,8 @@ function dropdown($name, $options, $selectOne = true) {
  * @return [String-or-false] Returns false is the given array is empty
  * Returns the HTML for a header
  */
-function makeHeader( $contents ) {
+function makeHeader( $contents )
+{
   return divWithNestedDivs("header", $contents);
 }
 
@@ -137,7 +138,8 @@ function makeHeader( $contents ) {
  * @param  [array] $listItems the array containing the list items
  * @return [string] The string containing HTML code for an unordered list
  */
-function asUL($listItems) {
+function asUL($listItems)
+{
   $liSoFar = "";
 
   foreach($listItems AS $listItem)
@@ -176,21 +178,31 @@ function makeImgGrid($gridBlock, $width, $height) {
   return "<div class='gridLinkWrapper'>\n$grid</div>";
 }
 
-
 /**
  * makeGridElement returns the HTML for an image that links to a URL
  * @param  $imageURL the URL to use for the image
  * @param  $linkURL the URL to use for the image link
  * @return $htmlSTR the string for an HTML image that links to a URL
  */
-function makeGridElement($imageURL, $linkURL)
+function makeGridElement($imageURL, $linkURL=false)
 {
   $htmlSTR="";
-  $htmlSTR.="<a href='".$linkURL."'>"
-          ."  <img border='0' alt='Absolute Unit' src='".$imageURL."' width='200' height='200'>"
+  $class="";
+  if ($linkURL === false)
+  {
+    $htmlSTR.="<a class='gridPane'>";
+    $class.="gridPaneUserPic";
+  }
+  else
+  {
+    $htmlSTR.="<a class='gridPane' href='".$linkURL."'>";
+    $class.="gridPaneElement";
+  }
+  $htmlSTR.="  <img border='0' class='".$class."' alt='If you can read this... an image link is broken!' src='".$imageURL."'>"
           ."</a>";
   return $htmlSTR;
 }
+
 
 /* resetArrayIndices takes in an array and returns that array with
 *    it's indices reset to be numeric, starting at 0
@@ -321,7 +333,8 @@ function implodeWithKeys( $contents ) {
 * @return $result The string containing the result of the test
 * test : ANY, ANY, (boolean) -> string
 */
-function test($actual, $expect, $normalize = false) {
+function test($actual, $expect, $normalize = false)
+{
   if( is_string($actual) &&
       is_string($expect) &&
       $normalize === true) {
@@ -378,4 +391,74 @@ function testResults($results, $printAllTests)
   echo "----------------------\n";
 }
 
-  ?>
+/* NEEDS DOCUMENTATION
+ *
+*/
+function contentPane($links=false, $images=false, $debug=false)
+{
+  $htmlSTR="";
+  $conn=mysqli_connect('localhost','unknown','security1#','social-site');
+  if ($debug)
+  {
+    echo "Connection ", ($conn ? "" : "NOT "), "established.<br />\n";
+    if (mysqli_connect_error()) { echo "Error details: ", mysqli_connect_error(), "\n"; }
+  }
+  //GET USER PROFILE PICS
+  $query="SELECT * FROM users";
+  $results=mysqli_query($conn,$query);
+  if ($debug)
+  {
+    echo "query was a ", ($results ? "success (though it might still have only 0 rows)" : "failure"), ".<br />\n";
+  }
+  while ($row=mysqli_fetch_assoc($results))
+  {
+    $htmlSTR.=makeGridElement($row['profilePicture']);
+    $query2="SELECT * FROM content WHERE User='".$row['Username']."'";
+    $results2=mysqli_query($conn,$query2);
+    while ($row2=mysqli_fetch_assoc($results2))
+    {
+      $htmlSTR.=spacer();
+      $htmlSTR.=makeGridElement($row2['Image'],$row2['Hyperlink']);
+    }
+    $htmlSTR.="<br/>";
+  }
+  mysqli_close($conn);
+  return $htmlSTR;
+}
+/* NEEDS DOCUMENTATION
+ *
+*/
+function spacer()
+{
+  return "<img src='spacer.png' class='spacer'>";
+}
+/* NEEDS DOCUMENTATION
+ *
+*/
+function adminGridCell( $attrs )
+{
+
+  if(sizeof($attrs) === 0)
+    return false;
+  else
+    $cellAttrs = asAttrs($attrs);
+
+  return "<div><input $cellAttrs /></div>\n";
+}
+/* NEEDS DOCUMENTATION
+ *
+*/
+function adminGridRow( $cellAttrs )
+{
+  $rowSoFar = "";
+
+  if(sizeof($cellAttrs) === 0)
+    return false;
+  else {
+    foreach($cellAttrs AS $cellAttr)
+      $rowSoFar .= adminGridCell($cellAttr);
+  }
+
+  return $rowSoFar;
+}
+?>

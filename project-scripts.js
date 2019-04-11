@@ -1,7 +1,7 @@
 /*
 Group: require_once(teamname.php);
-Last edited: 04/10/2019 (V1.0)
-Last edited by: Justin Farmer
+Last edited: 04/11/2019 (V1.0)
+Last edited by: Joe Sullivan
 Purpose: This is a file containing javascript functions for our project.
 */
 function startTime(){
@@ -105,4 +105,14 @@ function loadScripts() {
     startTime();
     document.addEventListener("click", closeAllSelect); /*if the user clicks anywhere outside the select box,
                                                           then close all select boxes:*/
+}
+
+function usernameValidate(input) {
+	var regex = /[^a-z0-9]/gi;
+	input.value = input.value.replace(regex,"");
+}
+
+function passwordValidate(input) {
+
+
 }
