@@ -11,7 +11,7 @@
 	}
 </script>
   <head>
-
+	<link rel="stylesheet" href="basic.css">
     <meta charset="utf-8">
     <title>Login</title>
 	<?php
@@ -19,6 +19,21 @@
 	?>
   </head>
   <body>
+  <p>
+	<?php
+		echo makeHeader(array("left" => makeImgGrid("square.jpeg", 11, 6),
+							 "center" => "<h1>Login</h1>",
+							 "right" => asUL(array(hyperlink("createAccount.php",
+													"Create Account",
+													"menu"),
+										  hyperlink("user-page.php",
+										            "User Page",
+													"menu"),
+										  hyperlink("admin-page.php",
+													"Admin Page",
+													"menu")))));
+	 ?>
+	</p>
 	<form>
 		Username:<br>
 		<input type="text" name="username" onkeyup="usernameValidate(this)" required>
@@ -28,14 +43,7 @@
 		<br><br>
 		<input type="submit" value="Submit">
 	</form>
-    Login page stub
-    <br/>
-    <a href="createAccount.php">Create Account</a>
-    <br/>
-    <a href="user-page.php">User page (after successful form submission)</a>
-    <br/>
-    <a href="admin-page.php">admin page (after successful form submission with administrative credentials)</a>
-    <br/>
+	<br>
 	<span>
 		<?php
 			echo contentPane();
