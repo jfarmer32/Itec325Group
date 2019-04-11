@@ -9,12 +9,13 @@
 	?>
   </head>
   <body>
-	<p>
-		<?php
-			echo makeHeader (array("left" => makeImgGrid("sqaure.jpeg", 11, 6),
-								   "center" => "<h1>Login</h1>"));
-		?>
-	</p>
+	<form>
+		Username:<br>
+		<input type="text" name="username">
+		<br>
+		Password:<br>
+		<input type = "text" name="password">
+	</form>
     Login page stub
     <br/>
     <a href="createAccount.php">Create Account</a>
