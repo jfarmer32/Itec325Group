@@ -1,5 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+<script>
+		function usernameValidate(input) {
+		var regex = /[^a-z0-9]/gi;
+		input.value = input.value.replace(regex,"");
+	}
+		function passwordValidate(input) {
+		var regex = /[\\<>'"/?]+/gi;
+		input.value = input.value.replace(regex, "");
+	}
+</script>
   <head>
 
     <meta charset="utf-8">
@@ -11,10 +21,10 @@
   <body>
 	<form>
 		Username:<br>
-		<input type="text" name="username" required>
+		<input type="text" name="username" onkeyup="usernameValidate(this)" required>
 		<br>
 		Password:<br>
-		<input type = "text" name="password" required>
+		<input type = "text" name="password" onkeyup="passwordValidate(this)" required>
 		<br><br>
 		<input type="submit" value="Submit">
 	</form>
