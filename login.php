@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Login</title>
+  </head>
+  <body>
+    Login page stub
+    <br/>
+    <a href="createAccount.php">Create Account</a>
+    <br/>
+    <a href="user-page.php">User page (after successful form submission)</a>
+    <br/>
+    <a href="admin-page.php">admin page (after successful form submission with administrative credentials)</a>
+    <br/>
+  </body>
+</html>
