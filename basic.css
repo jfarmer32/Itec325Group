@@ -54,17 +54,27 @@ body {
   margin: 0px;
   padding:0px;
   font-size: 30px;
-  font-family: 'PT Sans Narrow', sans-serif;
+  font-family: courier;
 }
 
 input[type=submit] { /* <---- Input of Type Submit */
 	background-color: darkblue;
 	border: 5px solid black;
 	color: white;
-	padding: 8px 16px;
-	font-size: 30px;
+	padding: 5px;
+	font-size: 20px;
 	cursor: pointer;
 	border-radius: 8px;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 ul {
@@ -84,12 +94,22 @@ a {
   text-decoration: none;
 }
 
+th, td {
+  text-align: center;
+  color: white;
+  font-size: 15px;
+  font-family: courier;
+  text-decoration: none;
+  padding: 0px;
+  margin: 0px;
+}
+
 /***************************************************/
 /* header classes */
 .header { /* Wrapper */
   width:100%;
   height:121px;
-  /*overflow: hidden;*/
+  overflow: hidden;
   background-color: #2176ff;
   border-bottom: 3px solid #FFF8E7;
 }
@@ -153,32 +173,33 @@ h1 {
 .aboveContentRight {
   float: right;
   margin-right: 100px;
-  color: white;
 }
 
 /***************************************************/
 /* classes for admin content */
 .adminGridContainer {
-  border: 3px solid darkgray;
+  border: 3px solid #C0C0C0;
   padding: 10px;
   width: 90%;
-  height: 200px;
+  height: auto;
   margin: auto;
+  margin-top: 40px;
   display: grid;
   grid-template-columns: auto auto auto auto;
   grid-gap: 10px;
-  background-color: #80b0ff;
-  margin-top: 10px;
+  background-color: #C0C0C0;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
 }
 
 .adminGridContainer > div {
-  background-color: #6699ff;
+  background-color: #0058e6;
   border: 1px solid #001133;
   text-align: center;
-  font-size: 30px;
-  font-size: 100%;
+  padding: 5px;
+  color: #FFF8E7;
+  font-size: 20px;
+  font-family: courier;
 }
 
 .bottomAdminContainer {
@@ -187,7 +208,6 @@ h1 {
   color: #FFF8E7;
   padding:10px;
   margin: auto;
-  padding: 10px;
   width: 90%;
   height: auto;
   border-bottom-left-radius: 15px;
@@ -234,4 +254,66 @@ a.menu:link {
 a.menu:hover {
   text-shadow: 2px 2px #A9A9A9;;
   color: black;
+}
+
+/******************************************/
+/* Dropdown style */
+/*the container must be positioned relative:*/
+.custom-select {
+  position: relative;
+  font-family: Arial;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+
+.select-selected {
+  background-color: #0058e6;
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: #0058e6;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
 }

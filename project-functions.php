@@ -89,6 +89,38 @@ function adminGridRow( $cellAttrs ) {
 
   return $rowSoFar;
 }
+
+/* dropdown takes in a $name and an array of $options and returns
+*   a string HTML for a drop-down menu.
+* @param $name the name of the of the dropdown
+* @param $options the array of dropdown options
+* @return $dropdownMenu the string of HTML for a drowdown menu
+* dropdown : string, string[] -> string
+*/
+function dropdown($name, $options, $selectOne = true) {
+    $openSelect = "\n<select name='$name' id='$name'>";
+    $closeSelect = "</select>\n";
+    $pos = 0;
+
+     if(is_string($selectOne)) {
+        $dropdownOptions = "<option value =0>$selectOne</option>\n";
+        $pos = 1;
+      }
+     else if($selectOne === true) {
+        $dropdownOptions = "<option value =0>Select One</option>\n";
+        $pos = 1;
+      }
+     else
+        $dropdownOptions = "";
+
+  foreach($options AS $option) {
+    $dropdownOptions .= "<option value ='$pos'>$option</option>\n";
+    $pos++;
+  }
+
+  return "$openSelect\n$dropdownOptions" . "$closeSelect";
+}
+
 /**
  * makeHeader calls divWithNestedDivs, and sets the parent class to be header
  * @param  [String[]] $contents the array key-value pairs containing the div
@@ -160,9 +192,100 @@ function makeGridElement($imageURL, $linkURL)
   return $htmlSTR;
 }
 
+/* resetArrayIndices takes in an array and returns that array with
+*    it's indices reset to be numeric, starting at 0
+* @param $contents The array whose indices are being reset
+* @return $numericArray The original array, but with numeric indices
+* resetArrayIndices : any[] -> any[]
+*/
+function resetArrayIndices($contents) {
+  $numericArray = array();
+  $pos = 0;
 
+    foreach($contents AS $content) {
+      $numericArray[$pos] = $content;
+      $pos++;
+    }
+  return $numericArray;
+}
 
+/* AsRow takes in an array of strings and returns a single, long
+  *   string, the HTML for one table row.
+  * @param $elements The array being turned into a table row.
+  * @param $firstIteamAsHeader A boolean that indicates if the first
+  *   element is a header. (Defaults to true)
+  * @return A string containing the HTML for one table row.
+  * asRow : string[], (boolean) -> string
+  */
+function asRow($elements, $firstCellIsHeader = true) {
+  $rowSoFar = "";
+  $tableCells = resetArrayIndices($elements);
 
+      if($tableCells[0] !== ""){
+      foreach($tableCells AS $index => $tableCell) {
+        ($firstCellIsHeader === true && $index === 0)
+          ? $rowSoFar = "        <th>$tableCell</th>\n"
+          : $rowSoFar .= "        <td>$tableCell</td>\n";
+        }
+      }
+    return " <tr>\n$rowSoFar      </tr>\n";
+  }
+
+/* radioTableRow takes in a $name and an array of $radios and returns
+*    a bank of radio buttons inside of a table-row.
+* @param $subject the subject of the radio buttons
+* @param $rowName the name of the row
+* @param $options the options each set of radios will have
+* @return a table row of radio buttons
+* radioTableRow : string, string[] -> string
+*/
+function radioTableRow($subject, $rowName, $options, $htmlAttrs = array()) {
+  $attrs = asAttrs($htmlAttrs);
+  $radiosSoFar = array($rowName);
+
+    foreach($options AS $option)
+        $radiosSoFar[$rowName."-".$option] = "<input type='radio' name='[$subject][$rowName]' value='$option' id='$rowName-$option' $attrs/>";
+
+  return asRow($radiosSoFar, true);
+}
+
+/* tableHeader takes in an array of strings and returns a string of HTML
+*    that is a row with each string from $headers enclosed in <th> tags
+* @param $headers The array of strings being turned into table headings
+* @param $shiftRight an optional parameter defaulted to false, when set to true
+*         the first <th> will be empty.
+* @return $tableHeader the HTML for a row of table headings, enclosed in <tr></tr>
+*/
+function tableHeader($headers, $shiftRight = false) {
+  ($shiftRight === true)
+    ? $tableHeader = "      <th></th>\n"
+    : $tableHeader = "";
+
+    foreach($headers AS $header)
+      $tableHeader .= "      <th>$header</th>\n";
+
+  return "     <tr>\n$tableHeader     </tr>\n";
+}
+
+/* radioTable takes in a $name, and two arrays $headers, and $stuffs and
+*    and returns the HTML for a table of radio buttons.
+* @param $subject the subject of the radio buttons
+* @param $options the options each set of radios will have
+* @param $radioRows the name and contents of each row
+* @return $radioTable the table of radio buttons
+* radioTable : string, string[], string[] -> string
+*/
+function radioTable($subject, $options, $radioRows) {
+  $radioTable = "";
+
+  if(sizeof($options) !== 0)
+    $radioTable = tableHeader($options, true);
+
+    foreach($radioRows AS $rowName => $radioRow)
+      $radioTable .= "     " . radioTableRow($subject, $rowName, $radioRow);
+
+  return "    <table>\n$radioTable\n    </table>";
+}
 
 /* stripWhitespace strips whitespace from a string
 * @param $string The string to be stripped

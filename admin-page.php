@@ -18,7 +18,7 @@ $body = "The FitnessGram™ Pacer Test is a multistage aerobic capacity test tha
     <script src="project-scripts.js"></script>
   </head>
 
-  <body onload="startTime()">
+  <body onload="loadScripts()">
     <?php echo makeHeader(array("left" => makeImgGrid("square.jpeg", 11, 6),
                                 "center" => "<h1>Grid-Links</h1>",
                                 "right" => asUL(array(hyperlink("https://www.w3schools.com/css/css_link.asp",
@@ -34,36 +34,36 @@ $body = "The FitnessGram™ Pacer Test is a multistage aerobic capacity test tha
 
     <div class="aboveContentLeft">Admin _______</div>
 
-    <div class="aboveContentRight" id="time">Time:</div>
+    <div class="aboveContentRight" id="time"></div>
 
     <div class="adminGridContainer">
-      <?php echo adminGridRow(array("cell1" => array("name" => "viewUsers",
-                                                     "type" => "submit",
-                                                     "value" => "View Users"),
-                                    "cell2" => array("name" => "viewContent",
-                                                     "type" => "submit",
-                                                     "value" => "View Content"),
-                                    "cell3" => array("name" => "viewSomethingElse",
-                                                     "type" => "submit",
-                                                     "value" => "View Something"),
-                                    "cell4" => array("name" => "filter1",
-                                                     "type" => "radio",
-                                                     "value" => "Filter1"),
-                                    "cell5" => array("name" => "filter2",
-                                                     "type" => "radio",
-                                                     "value" => "Filter2"),
-                                    "cell6" => array("name" => "filter3",
-                                                     "type" => "radio",
-                                                     "value" => "Filter3"),
-                                    "cell7" => array("name" => "filter4",
-                                                     "type" => "checkbox",
-                                                     "value" => "Filter4"),
-                                    "cell8" => array("name" => "filter5",
-                                                     "type" => "checkbox",
-                                                     "value" => "Filter5"),
-                                                   )) ?>
-
+      <div class="custom-select" style="width:auto; height:auto;">
+        <?php echo dropdown("table", array("Users", "Content"), "Select Table:"); ?>
+      </div>
+      <div><?php echo radioTable("filter",
+                            array("1 year", "6 months", "last month", "1 week"),
+                            array("Older than" => array("1 year", "6 months", "1 month", "1 week"))) ?>
+      </div>
+      <div>
+        Include Admin <input type="checkbox" name="showAdmin" value="showAdmin">
+      </div>
+      <div>
+        Include Restricted <input type="checkbox" name="showRestricted" value="showAdmin">
+      </div>
+      <div>
+        Only Admin? <input type="checkbox" name="onlyAdmin" value="onlyAdmin">
+      </div>
+      <div>
+        Only Restricted? <input type="checkbox" name="onlyRestricted" value="onlyRestricted">
+      </div>
+      <div>
+        <input type="text" name="userSelected" placeholder="Enter User if needed">
+      </div>
+      <div>
+        <input type="submit" name="adminSumbit" value="Go">
+      </div>
     </div>
+
     <div class="bottomAdminContainer">
         <?php echo $body ?>
     </div>
