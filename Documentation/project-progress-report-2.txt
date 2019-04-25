@@ -2,17 +2,21 @@ require_once(teamname.php);
 Progress summary 2 & Problems encountered
 Benjamin Lichtman, Chase Kuehn, Joe Sullivan, Justin Farmer
 
-Progress on the project has been proceeding as planned.  Justin has continued his work on the
-'admin-page.php', 'header.php', 'basic.css', 'project-functions.php', and 'test-project-functions.php' files,
+  Progress on our project has been proceeding as planned.
+  Justin has continued his work on the'admin-page.php', 'header.php', 'basic.css', 'project-functions.php', and 'test-project-functions.php' files,
 adding to, improving and refactoring the code while working on the project.  He added a file to house
-the project’s JavaScript functions.  This file already contains to return the current date
+the project’s JavaScript functions.  This file already contains functions to return the current date
 and time as well as to dynamically generate a dropdown menu.  Some issues that he has encountered
 during this work are trouble displaying table rows that have been pulled from the database
 (this was later fixed by an improved sql query) and trouble pulling filtered rows from the database (this is currently in progress).
-Chase has continued to work with and oversee the database, including monitoring any issues that may
+  Chase has continued to work with and oversee the database, including monitoring any issues that may
 arise with the webpages and their connections to the database.  An issue that has come up is that the
 database can manage a “limitless” number of content entries, but the website should not manage that many
 images (for both aesthetic and efficiency reasons).  In order to keep user interest, a random selection of
 content will be displayed on the page.  This limit will most likely have to be enforced through PHP.
-Joe has continued his work on the 'login.php' and 'user-page.php' files, implemetening and improving 
-orginal code to meet requirements. An issue occured with the 'login.php' when validating login, after loginand getting the users info.
+  Joe has continued his work on the 'login.php' and 'user-page.php' files, implemetening and improving
+orginal code to meet requirements. An issue occured with the 'login.php' when validating login, after login and getting the users info.
+  Benjamin has implemented features on the landing page to deal with the database issues that Chase brought up, namely, the implementation of
+a limit to the number of content panes (images with links) that can appear per user, such that the landing page scales and maintains the user experience.
+Benjamin also implemented a check for content restriction (one of the columns of the content table) when the PHP program is adding content to the page.
+This will allow content to be moderated via an administrator or the user that owns the content by simply not displaying restricted content.
