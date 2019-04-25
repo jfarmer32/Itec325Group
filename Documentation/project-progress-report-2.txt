@@ -1,0 +1,16 @@
+require_once(teamname.php);
+Progress summary 2 & Problems encountered
+Benjamin Lichtman, Chase Kuehn, Joe Sullivan, Justin Farmer
+
+Progress on the project has been proceeding as planned.  Justin has continued his work on the
+'admin-page.php', 'header.php', 'basic.css', 'project-functions.php', and 'test-project-functions.php' files,
+adding to, improving and refactoring the code while working on the project.  He added a file to house
+the project’s JavaScript functions.  This file already contains to return the current date
+and time as well as to dynamically generate a dropdown menu.  Some issues that he has encountered
+during this work are trouble displaying table rows that have been pulled from the database
+(this was later fixed by an improved sql query) and trouble pulling filtered rows from the database (this is currently in progress).
+Chase has continued to work with and oversee the database, including monitoring any issues that may
+arise with the webpages and their connections to the database.  An issue that has come up is that the
+database can manage a “limitless” number of content entries, but the website should not manage that many
+images (for both aesthetic and efficiency reasons).  In order to keep user interest, a random selection of
+content will be displayed on the page.  This limit will most likely have to be enforced through PHP.
