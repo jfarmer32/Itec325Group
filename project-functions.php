@@ -429,11 +429,17 @@ function contentPane($links=false, $images=false, $debug=false)
     $query2="SELECT * FROM content WHERE User='".$row['Username']."'";
     $results2=mysqli_query($conn,$query2);
     $contentLimiter=0;
-    while ($row2=mysqli_fetch_assoc($results2) && ($contentLimiter <  7) )
+    while ($row2=mysqli_fetch_assoc($results2))
     {
-      $htmlSTR.=spacer();
-      $htmlSTR.=makeGridElement($row2['Image'],$row2['Hyperlink']);
-      $contentLimiter++;
+      if ($contentLimiter < 7)
+      {
+        $htmlSTR.=spacer();
+        $htmlSTR.=makeGridElement($row2['Image'],$row2['Hyperlink']);
+        $contentLimiter=$contentLimiter+1;
+      }
+      else {
+        //don't make a content pane
+      }
     }
     $htmlSTR.="<br/>";
   }
