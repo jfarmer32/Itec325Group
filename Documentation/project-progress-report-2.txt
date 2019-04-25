@@ -14,3 +14,5 @@ arise with the webpages and their connections to the database.  An issue that ha
 database can manage a “limitless” number of content entries, but the website should not manage that many
 images (for both aesthetic and efficiency reasons).  In order to keep user interest, a random selection of
 content will be displayed on the page.  This limit will most likely have to be enforced through PHP.
+Joe has continued his work on the 'login.php' and 'user-page.php' files, implemetening and improving 
+orginal code to meet requirements. An issue occured with the 'login.php' when validating login, after loginand getting the users info.
