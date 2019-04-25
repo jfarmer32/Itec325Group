@@ -431,7 +431,7 @@ function contentPane($links=false, $images=false, $debug=false)
     $contentLimiter=0;
     while ($row2=mysqli_fetch_assoc($results2))
     {
-      if ($contentLimiter < 7 && $row2['isContentRestricted']!=1 )
+      if ($contentLimiter < 6 && $row2['isContentRestricted']!=1 )
       {
         $htmlSTR.=spacer();
         $htmlSTR.=makeGridElement($row2['Image'],$row2['Hyperlink']);
