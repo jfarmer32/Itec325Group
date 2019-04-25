@@ -241,6 +241,21 @@ function asRow($elements, $firstCellIsHeader = true) {
       }
     return " <tr>\n$rowSoFar      </tr>\n";
   }
+/** Needs documentation
+ * [checkboxRow description]
+ * @return [type] [description]
+ */
+function checkboxRow($title, $elements, $options) {
+  if(sizeof($options) !== 0)
+    $header = tableHeader($options, true);
+
+  $rowSoFar = "<th>$title</th>\n";
+
+  foreach($elements AS $element)
+    $rowSoFar .= "<td><input type='checkbox' name='$element' value='$element'></td>\n";
+
+  return "<table>\n $header<tr>\n$rowSoFar      </tr>\n</table>";
+}
 
 /* radioTableRow takes in a $name and an array of $radios and returns
 *    a bank of radio buttons inside of a table-row.

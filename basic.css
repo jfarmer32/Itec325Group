@@ -140,7 +140,7 @@ h1 {
   margin: auto;
   margin-top: 40px;
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto;
   grid-gap: 10px;
   background-color: #C0C0C0;
   border-top-left-radius: 15px;
@@ -155,6 +155,15 @@ h1 {
   color: #FFF8E7;
   font-size: 20px;
   font-family: courier;
+}
+
+.adminGridContainer > table, th, td {
+  border: 2px solid #FFF8E7;
+  padding: 5px;
+}
+
+.adminGridContainer > table {
+  border-collapse: collapse;
 }
 
 .bottomAdminContainer {

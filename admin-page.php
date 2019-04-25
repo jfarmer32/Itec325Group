@@ -41,20 +41,13 @@ $body = "The FitnessGram™ Pacer Test is a multistage aerobic capacity test tha
         <?php echo dropdown("table", array("Users", "Content"), "Select Table:"); ?>
       </div>
       <div><?php echo radioTable("filter",
-                            array("1 year", "6 months", "last month", "1 week"),
-                            array("Older than" => array("1 year", "6 months", "1 month", "1 week"))) ?>
+                            array("1 year", "6 months", "1 month", "1 week"),
+                            array("Created in the last " => array("1 year", "6 months", "1 month", "1 week"))) ?>
       </div>
       <div>
-        Include Admin <input type="checkbox" name="showAdmin" value="showAdmin">
-      </div>
-      <div>
-        Include Restricted <input type="checkbox" name="showRestricted" value="showAdmin">
-      </div>
-      <div>
-        Only Admin? <input type="checkbox" name="onlyAdmin" value="onlyAdmin">
-      </div>
-      <div>
-        Only Restricted? <input type="checkbox" name="onlyRestricted" value="onlyRestricted">
+        <?php echo checkboxRow("Show ",
+                               array("showAdmin", "showRestrictd", "onlyAdmin", "onlyRestricted"),
+                               array("Admin", "Restricted", "Only Admin", "Only Restricted")) ?>
       </div>
       <div>
         <input type="text" name="userSelected" placeholder="Enter User if needed">
