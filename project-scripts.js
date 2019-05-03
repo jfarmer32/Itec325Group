@@ -4,6 +4,7 @@ Last edited: 04/11/2019 (V1.0)
 Last edited by: Joe Sullivan
 Purpose: This is a file containing javascript functions for our project.
 */
+
 function startTime(){
   var currentdate = new Date();
   var day = currentdate.getDate();
@@ -99,14 +100,6 @@ function closeAllSelect(elmnt) {
   }
 }
 
-
-function loadScripts() {
-    dropdownStyle();
-    startTime();
-    document.addEventListener("click", closeAllSelect); /*if the user clicks anywhere outside the select box,
-                                                          then close all select boxes:*/
-}
-
 function usernameValidate(input) {
 	var regex = /[^a-z0-9]/gi;
 	input.value = input.value.replace(regex,"");
@@ -114,4 +107,23 @@ function usernameValidate(input) {
 
 function passwordValidate(input) {
 
+}
+
+function adminAlert() {
+  alert ("This is the Admin Control page where Admin may update\, "
+        + "modify\, and monitor the database. To return to the homepage\, "
+        + "click \'Return\', or click \'Logout\'.");
+}
+
+function confirmPull() {
+  if(confirm ("Are you sure you would like to pull rows from the database?")) {
+    document.getElementById("tableForm").action = "admin-show-table.php";
+  }
+}
+
+function loadScripts() {
+    dropdownStyle();
+    startTime();
+    document.addEventListener("click", closeAllSelect); /*if the user clicks anywhere outside the select box,
+                                                       then close all select boxes:*/
 }

@@ -8,71 +8,74 @@ Purpose: provide utility functions for the grid-link project
 error_reporting(E_ALL);
 
 /* AsAttrs takes in an array of strings (each key is also a string)
-  *   and returns one string that is the attribute-value pairs seperated by an
-  *   "=", with the values in 'single quotes'.
-  * @param $attrValues The attribute(as the key) value pairs being returned
-  *   as a string.
-  * @return A string containing the HTML tags as attributes-and-values.
-  * asAttrs : string[] -> string
-  */
+*   and returns one string that is the attribute-value pairs seperated by an
+*   "=", with the values in 'single quotes'.
+* @param $attrValues The attribute(as the key) value pairs being returned
+*   as a string.
+* @return A string containing the HTML tags as attributes-and-values.
+* asAttrs : string[] -> string
+*/
 function asAttrs($attrValues)
 {
-    $AVPairs = "";
+  $AVPairs = "";
 
-    if(sizeof($attrValues) !== 0) {
+  if(sizeof($attrValues) !== 0) {
     foreach($attrValues AS $attr => $attrValue) {
       $AVPairs .= "$attr='$attrValue' ";
     }
-    }
-    else
-      return false;
-
-    return substr($AVPairs, 0, strlen($AVPairs) - 1);
   }
+  else
+  return false;
 
-  /* hyperlink returns a string of HTML for a hyperlink.
-  * @param $url The URL to be linked too
-  * @param $linkTxt The name of the link, either a string
-  *                 or false(meaning no link was entered)
-  * @return The HTML string containing the link to the URL
-  * hyperlink : string, string -> string
-  */
-  function hyperlink($url, $linkTxt, $class) {
-    if ($linkTxt === false) //If no link text specified, then default to URL
-      $linkTxt = $url;
+  return substr($AVPairs, 0, strlen($AVPairs) - 1);
+}
 
-    return "<a class='$class' href='$url' $addAttrs>$linkTxt</a>";
-  }
+/* hyperlink returns a string of HTML for a hyperlink.
+* @param $url The URL to be linked too
+* @param $linkTxt The name of the link, either a string
+*                 or false(meaning no link was entered)
+* @return The HTML string containing the link to the URL
+* hyperlink : string, string -> string
+*/
+function hyperlink($url, $linkTxt, $class, $addAttrs = array()) {
+  if ($linkTxt === false) //If no link text specified, then default to URL
+  $linkTxt = $url;
+
+  if(sizeof($addAttrs) !== 0)
+  $attrs = asAttrs($addAttrs);
+
+  return "<a class='$class' href='$url' $attrs>$linkTxt</a>";
+}
 
 /**
- * divWithNestedDivs takes in a wrapper class name, and an array of contents
- *  where each key-value entry is a class(key) => content(value)
- * @param  [String] $wrapperClass the parent class that will wrap
- *  the child divs
- * @param  [String[]] $divContents key-value pairs for the child divs
- *  the key is the child's class, the value is the childs content
- * @return [String-or-false] Returns the HTML string for a div with
- *  nested divs
- * Returns false is the given array is empty
- */
+* divWithNestedDivs takes in a wrapper class name, and an array of contents
+*  where each key-value entry is a class(key) => content(value)
+* @param  [String] $wrapperClass the parent class that will wrap
+*  the child divs
+* @param  [String[]] $divContents key-value pairs for the child divs
+*  the key is the child's class, the value is the childs content
+* @return [String-or-false] Returns the HTML string for a div with
+*  nested divs
+* Returns false is the given array is empty
+*/
 function divWithNestedDivs( $wrapperClass, $divContents ) {
   $divsSoFar = "";
 
   if(sizeof($divContents) !== 0) {
-  foreach($divContents AS $childClass => $divContent)
+    foreach($divContents AS $childClass => $divContent)
     $divsSoFar .= "  <div class='$childClass'>$divContent</div>\n";
   }
   else
-    return false;
+  return false;
   return "<div class='$wrapperClass'>\n$divsSoFar</div>";
 }
 
 function adminGridCell( $attrs ) {
 
   if(sizeof($attrs) === 0)
-    return false;
+  return false;
   else
-    $cellAttrs = asAttrs($attrs);
+  $cellAttrs = asAttrs($attrs);
 
   return "<div><input $cellAttrs /></div>\n";
 }
@@ -81,10 +84,10 @@ function adminGridRow( $cellAttrs ) {
   $rowSoFar = "";
 
   if(sizeof($cellAttrs) === 0)
-    return false;
+  return false;
   else {
     foreach($cellAttrs AS $cellAttr)
-      $rowSoFar .= adminGridCell($cellAttr);
+    $rowSoFar .= adminGridCell($cellAttr);
   }
 
   return $rowSoFar;
@@ -98,92 +101,88 @@ function adminGridRow( $cellAttrs ) {
 * dropdown : string, string[] -> string
 */
 function dropdown($name, $options, $selectOne = true) {
-    $openSelect = "\n<select name='$name' id='$name'>";
-    $closeSelect = "</select>\n";
-    $pos = 0;
+  $openSelect = "<select name='$name' id='$name'>";
+  $closeSelect = "</select>";
 
-     if(is_string($selectOne)) {
-        $dropdownOptions = "<option value =0>$selectOne</option>\n";
-        $pos = 1;
-      }
-     else if($selectOne === true) {
-        $dropdownOptions = "<option value =0>Select One</option>\n";
-        $pos = 1;
-      }
-     else
-        $dropdownOptions = "";
+  if(is_string($selectOne)) {
+    $dropdownOptions = "<option value =0>$selectOne</option>\n";
+  }
+  else if($selectOne === true) {
+    $dropdownOptions = "<option value =0>Select One</option>\n";
+  }
+  else
+  $dropdownOptions = "";
 
   foreach($options AS $option) {
-    $dropdownOptions .= "<option value ='$pos'>$option</option>\n";
-    $pos++;
+    $dropdownOptions .= "<option value ='$option'>$option</option>\n";
   }
 
-  return "$openSelect\n$dropdownOptions" . "$closeSelect";
+  return "$openSelect\n$dropdownOptions" . "$closeSelect\n";
 }
 
 /**
- * makeHeader calls divWithNestedDivs, and sets the parent class to be header
- * @param  [String[]] $contents the array key-value pairs containing the div
- *         contents.
- * @return [String-or-false] Returns false is the given array is empty
- * Returns the HTML for a header
- */
+* makeHeader calls divWithNestedDivs, and sets the parent class to be header
+* @param  [String[]] $contents the array key-value pairs containing the div
+*         contents.
+* @return [String-or-false] Returns false is the given array is empty
+* Returns the HTML for a header
+*/
 function makeHeader( $contents )
 {
   return divWithNestedDivs("header", $contents);
 }
 
 /**
- * asUL takes in an array of strings and returns those stings in a UL
- * @param  [array] $listItems the array containing the list items
- * @return [string] The string containing HTML code for an unordered list
- */
+* asUL takes in an array of strings and returns those stings in a UL
+* @param  [array] $listItems the array containing the list items
+* @return [string] The string containing HTML code for an unordered list
+*/
 function asUL($listItems)
 {
   $liSoFar = "";
 
   foreach($listItems AS $listItem)
-    $liSoFar .= "  <li>$listItem</li>\n";
+  $liSoFar .= "  <li>$listItem</li>\n";
 
   return "<ul>\n$liSoFar</ul>";
 }
 
 /** Crude potential grid function
- * makeImgGrid turns a image into a grid of that image
- * @param  [String] $gridBlock the link to the image to be turned into a grid
- * @param  [non-negative-real] $width how many blocks wide
- * @param  [non-negative-real] $height how many blacks tall
- * @return [String] the html string for grid of images
- */
+* makeImgGrid turns a image into a grid of that image
+* @param  [String] $gridBlock the link to the image to be turned into a grid
+* @param  [non-negative-real] $width how many blocks wide
+* @param  [non-negative-real] $height how many blacks tall
+* @return [String] the html string for grid of images
+*/
 function makeImgGrid($gridBlock, $width, $height) {
   $gridCol = "  <div class='column'>\n"
-           . "    <img src=$gridBlock alt='Cell' style='width:100%'>\n"
-           . "  </div>\n";
+  . "    <img src=$gridBlock alt='Cell' style='width:100%'>\n"
+  . "  </div>\n";
 
   $gridRow = "<div class='row'>\n";
 
   if($width > 0 && $height > 0) {
     for($i=0;$i<$width; $i++)
-      $gridRow .= $gridCol . " ";
+    $gridRow .= $gridCol . " ";
 
-      $gridRow .= "\n</div>";
-      $grid = "";
+    $gridRow .= "\n</div>";
+    $grid = "";
 
-      for($j=0;$j<$height; $j++)
-      $grid .= $gridRow . "\n";
-    }
-    else
-      return false;
+    for($j=0;$j<$height; $j++)
+    $grid .= $gridRow . "\n";
+  }
+  else
+  return false;
 
   return "<div class='gridLinkWrapper'>\n$grid</div>";
 }
 
 /**
- * makeGridElement returns the HTML for an image that links to a URL
- * @param  $imageURL the URL to use for the image
- * @param  $linkURL the URL to use for the image link
- * @return $htmlSTR the string for an HTML image that links to a URL
- */
+* makeGridElement returns the HTML for an image that links to a URL
+* @param  $imageURL the URL to use for the image
+* @param  $linkURL the URL to use for the image link
+* @return $htmlSTR the string for an HTML image that links to a URL
+*/
 function makeGridElement($imageURL, $linkURL=false)
 {
   $htmlSTR="";
@@ -199,7 +198,7 @@ function makeGridElement($imageURL, $linkURL=false)
     $class.="gridPaneElement";
   }
   $htmlSTR.="  <img border='0' class='".$class."' alt='If you can read this... an image link is broken!' src='".$imageURL."'>"
-          ."</a>";
+  ."</a>";
   return $htmlSTR;
 }
 
@@ -213,46 +212,46 @@ function resetArrayIndices($contents) {
   $numericArray = array();
   $pos = 0;
 
-    foreach($contents AS $content) {
-      $numericArray[$pos] = $content;
-      $pos++;
-    }
+  foreach($contents AS $content) {
+    $numericArray[$pos] = $content;
+    $pos++;
+  }
   return $numericArray;
 }
 
 /* AsRow takes in an array of strings and returns a single, long
-  *   string, the HTML for one table row.
-  * @param $elements The array being turned into a table row.
-  * @param $firstIteamAsHeader A boolean that indicates if the first
-  *   element is a header. (Defaults to true)
-  * @return A string containing the HTML for one table row.
-  * asRow : string[], (boolean) -> string
-  */
+*   string, the HTML for one table row.
+* @param $elements The array being turned into a table row.
+* @param $firstIteamAsHeader A boolean that indicates if the first
+*   element is a header. (Defaults to true)
+* @return A string containing the HTML for one table row.
+* asRow : string[], (boolean) -> string
+*/
 function asRow($elements, $firstCellIsHeader = true) {
   $rowSoFar = "";
   $tableCells = resetArrayIndices($elements);
 
-      if($tableCells[0] !== ""){
-      foreach($tableCells AS $index => $tableCell) {
-        ($firstCellIsHeader === true && $index === 0)
-          ? $rowSoFar = "        <th>$tableCell</th>\n"
-          : $rowSoFar .= "        <td>$tableCell</td>\n";
-        }
-      }
-    return " <tr>\n$rowSoFar      </tr>\n";
+  if($tableCells[0] !== ""){
+    foreach($tableCells AS $index => $tableCell) {
+      ($firstCellIsHeader === true && $index === 0)
+      ? $rowSoFar = "        <th>$tableCell</th>\n"
+      : $rowSoFar .= "        <td>$tableCell</td>\n";
+    }
   }
+  return " <tr>\n$rowSoFar      </tr>\n";
+}
 /** Needs documentation
- * [checkboxRow description]
- * @return [type] [description]
- */
+* [checkboxRow description]
+* @return [type] [description]
+*/
 function checkboxRow($title, $elements, $options) {
   if(sizeof($options) !== 0)
-    $header = tableHeader($options, true);
+  $header = tableHeader($options, true);
 
   $rowSoFar = "<th>$title</th>\n";
 
   foreach($elements AS $element)
-    $rowSoFar .= "<td><input type='checkbox' name='$element' value='$element'></td>\n";
+  $rowSoFar .= "<td><input type='checkbox' name='$element' value='$element'></td>\n";
 
   return "<table>\n $header<tr>\n$rowSoFar      </tr>\n</table>";
 }
@@ -269,8 +268,8 @@ function radioTableRow($subject, $rowName, $options, $htmlAttrs = array()) {
   $attrs = asAttrs($htmlAttrs);
   $radiosSoFar = array($rowName);
 
-    foreach($options AS $option)
-        $radiosSoFar[$rowName."-".$option] = "<input type='radio' name='[$subject][$rowName]' value='$option' id='$rowName-$option' $attrs/>";
+  foreach($options AS $option)
+  $radiosSoFar[$rowName."-".$option] = "<input type='radio' name='[$subject][$rowName]' value='$option' id='$rowName-$option' $attrs/>";
 
   return asRow($radiosSoFar, true);
 }
@@ -284,11 +283,11 @@ function radioTableRow($subject, $rowName, $options, $htmlAttrs = array()) {
 */
 function tableHeader($headers, $shiftRight = false) {
   ($shiftRight === true)
-    ? $tableHeader = "      <th></th>\n"
-    : $tableHeader = "";
+  ? $tableHeader = "      <th></th>\n"
+  : $tableHeader = "";
 
-    foreach($headers AS $header)
-      $tableHeader .= "      <th>$header</th>\n";
+  foreach($headers AS $header)
+  $tableHeader .= "      <th>$header</th>\n";
 
   return "     <tr>\n$tableHeader     </tr>\n";
 }
@@ -305,10 +304,10 @@ function radioTable($subject, $options, $radioRows) {
   $radioTable = "";
 
   if(sizeof($options) !== 0)
-    $radioTable = tableHeader($options, true);
+  $radioTable = tableHeader($options, true);
 
-    foreach($radioRows AS $rowName => $radioRow)
-      $radioTable .= "     " . radioTableRow($subject, $rowName, $radioRow);
+  foreach($radioRows AS $rowName => $radioRow)
+  $radioTable .= "     " . radioTableRow($subject, $rowName, $radioRow);
 
   return "    <table>\n$radioTable\n    </table>";
 }
@@ -332,9 +331,9 @@ function implodeWithKeys( $contents ) {
 
   if(sizeof($contents) !== 0) {
     foreach($contents AS $key => $value)
-      $contentsSoFar .= "\n$key: $value";
+    $contentsSoFar .= "\n$key: $value";
   } else {
-      return false;
+    return false;
   }
 
   return $contentsSoFar;
@@ -350,21 +349,21 @@ function implodeWithKeys( $contents ) {
 function test($actual, $expect, $normalize = false)
 {
   if( is_string($actual) &&
-      is_string($expect) &&
-      $normalize === true) {
-        $actual = stripWhitespace($actual);
-        $expect = stripWhitespace($expect);
-      }
-  if( is_array($actual) &&
-      is_array($expect)) {
-        $actual = implodeWithKeys($actual);
-        $expect = implodeWithKeys($expect);
-      }
-  return ($actual === $expect)
-             ? "Pass"
-             : "     Actual: $actual\n     Expected: $expect\n";
-
+  is_string($expect) &&
+  $normalize === true) {
+    $actual = stripWhitespace($actual);
+    $expect = stripWhitespace($expect);
   }
+  if( is_array($actual) &&
+  is_array($expect)) {
+    $actual = implodeWithKeys($actual);
+    $expect = implodeWithKeys($expect);
+  }
+  return ($actual === $expect)
+  ? "Pass"
+  : "     Actual: $actual\n     Expected: $expect\n";
+
+}
 
 /* testResults prints statistics such as #tests run and #failed.
 *   (Prints result iff a test fails)
@@ -387,7 +386,7 @@ function testResults($results, $printAllTests)
       else
       {
         echo "\n\nTest# $total : $test => *Fail*\n"
-             . "\n > $test failed:\n$result";
+        . "\n > $test failed:\n$result";
         ++$failed;
       }
     }
@@ -400,13 +399,13 @@ function testResults($results, $printAllTests)
   echo "\n-------Summary--------";
   echo "\n > $total tests run.";
   echo  ($failed === 0)
-         ? "\n > All test passed!\n"
-         : "\n > $failed test failed.\n";
+  ? "\n > All test passed!\n"
+  : "\n > $failed test failed.\n";
   echo "----------------------\n";
 }
 
 /* NEEDS DOCUMENTATION
- *
+*
 */
 function contentPane($links=false, $images=false, $debug=false)
 {
@@ -440,10 +439,234 @@ function contentPane($links=false, $images=false, $debug=false)
   return $htmlSTR;
 }
 /* NEEDS DOCUMENTATION
- *
+*
 */
 function spacer()
 {
   return "<img src='spacer.png' class='spacer'>";
+}
+
+/**
+* grabUserRowsAsTable will return a html table containing the rows
+*   from the Users table that meet the given SELECT statement
+* @param  [string] $query: the SQL SELECT statement being sent to the DB
+* @return [string] the html table containing the SELECTed rows from the Users table
+*/
+/******************* NEEDS TO BE TESTED *******************/
+function grabUserRowsAsTable($query) {
+
+  $tableRows=tableHeader(array("Username", "Password", "profilePicture", "isAdmin", "isUserRestricted"));
+  $conn=mysqli_connect('localhost','unknown','security1#','social-site');
+
+  if ($debug)
+  {
+    echo "Connection ", ($conn ? "" : "NOT "), "established.<br />\n";
+    if (mysqli_connect_error()) { echo "Error details: ", mysqli_connect_error(), "\n"; }
+  }
+
+  $results=mysqli_query($conn, $query);
+
+  if ($debug)
+  {
+    echo "query was a ", ($results ? "success (though it might still have only 0 rows)" : "failure"), ".<br />\n";
+  }
+
+  while ($row=mysqli_fetch_assoc($results))
+  {
+    $tableRows.= "<tr>\n";
+
+    $tableRows.= "<td><input type='checkbox' name='toDelete[]' value=" . $row['Username'] . "></td>\n";
+    $tableRows.= "<td>" . $row['Username'] . "</td>\n";
+    $tableRows.= "<td>" . $row['Password'] . "</td>\n";
+    $tableRows.= "<td>" . $row['profilePicture'] . "</td>\n";
+    $tableRows.= "<td>" . $row['isAdmin'] . "</td>\n";
+    $tableRows.= "<td>" . $row['isUserRestricted'] . "</td>\n";
+
+    $tableRows.= "</tr>\n";
+  }
+
+  mysqli_close($conn);
+
+  return "<table class='adminTable'>\n$tableRows\n</table>";
+}
+
+/**
+* grabContentRowsAsTable will return a html table containing the rows
+*   from the Content table that meet the given SELECT statement
+* @param  [string] $query: the SQL SELECT statement being sent to the DB
+* @return [string] the html table containing the SELECTed rows from the Content table
+*/
+/******************* NEEDS TO BE TESTED *******************/
+function grabContentRowsAsTable($query) {
+
+  $tableRows=tableHeader(array("ContentID", "User", "Image", "isAdmin", "Hyperlink", "isContentRestricted", "ContentDate", "ContentTime"));
+  $conn=mysqli_connect('localhost','unknown','security1#','social-site');
+
+  if ($debug)
+  {
+    echo "Connection ", ($conn ? "" : "NOT "), "established.<br />\n";
+    if (mysqli_connect_error()) { echo "Error details: ", mysqli_connect_error(), "\n"; }
+  }
+
+  $results=mysqli_query($conn, $query);
+
+  if ($debug)
+  {
+    echo "query was a ", ($results ? "success (though it might still have only 0 rows)" : "failure"), ".<br />\n";
+  }
+
+  while ($row=mysqli_fetch_assoc($results))
+  {
+    $tableRows.= "<tr>\n";
+
+    $tableRows.= "<td><input type='checkbox' name='toDelete[]' value=" . $row['ContentID'] . "></td>\n";
+    $tableRows.= "<td>" . $row['ContentID'] . "</td>\n";
+    $tableRows.= "<td>" . $row['User'] . "</td>\n";
+    $tableRows.= "<td>" . $row['Image'] . "</td>\n";
+    $tableRows.= "<td>" . $row['Hyperlink'] . "</td>\n";
+    $tableRows.= "<td>" . $row['isContentRestricted'] . "</td>\n";
+    $tableRows.= "<td>" . $row['ContentDate'] . "</td>\n";
+    $tableRows.= "<td>" . $row['ContentTime'] . "</td>\n";
+
+    $tableRows.= "</tr>\n";
+  }
+
+  mysqli_close($conn);
+
+  return "<table>\n$tableRows\n</table>";
+}
+
+/**
+ * getTableRows will GET table rows from the DB on submit, using the info
+ *   provided at tableForm (This function uses $_GET).
+ * Instead of returning the table rows, this function will call either,
+ *  grabContentRowsAsTable or grabUserRowsAsTable, which will return the
+ *  desired table.
+ */
+/******************* NEEDS TO BE TESTED *******************/
+function getTableRows() {
+  $table = $_GET['table'];
+  $show = $_GET['showOnly'];
+
+  if($table === "Users") {
+
+    $query = "SELECT * FROM Users";
+
+    $pullOnly = "";
+
+    if($show === "Only Admin") {
+      $query .= " WHERE isAdmin = 1";
+    } else if($show === "Only Admin") {
+      $query .= " WHERE isUserRestricted = 1";
+    } else {
+      $query .= "";
+    }
+
+    if($userSelected != "") {
+      $query = "SELECT * FROM Users WHERE User=$userSelected";
+    }
+
+    grabUserRowsAsTable($query);
+
+  } else if($table === "Content") {
+
+    $query = "SELECT * FROM Content";
+
+    $timeFrame = "";
+    $timeAmnt = 0;
+    $filter = $_GET['filterByAge'];
+
+    if ($filter === "5 years") {
+      $timeFrame = "YEAR";
+      $timeAmnt = 5;
+    } else if($filter === "1 year") {
+      $timeFrame = "YEAR";
+      $timeAmnt = 1;
+    } else if($filter === "6 months") {
+      $timeFrame = "MONTH";
+      $timeAmnt = 6;
+    } else if($filter === "1 month") {
+      $timeFrame = "MONTH";
+      $timeAmnt = 1;
+    } else if($filter === "1 week") {
+      $timeFrame = "DAY";
+      $timeAmnt = 7;
+    } else if($filter === "24 hours") {
+      $timeFrame = "DAY";
+      $timeAmnt = 1;
+    } else {
+      $timeFrame = "YEAR";
+      $timeAmnt = 10;
+    }
+
+    $ageFilter = " WHERE DATEDIFF($timeFrame, ContentDate, GetDate()) < $timeAmnt";
+
+    $show = $_GET['showOnly'];
+    $pullOnly = "";
+
+    if($show === "Only Admin") {
+      $pullOnly = "AND isAdmin = 1";
+    } else if($show === "Only Admin") {
+      $pullOnly = "AND isContentRestricted = 1";
+    } else {
+      $pullOnly = "";
+    }
+
+    if($userSelected != "") {
+      $user = "AND User=$userSelected";
+    }
+
+    $query .= "$ageFilter $show $user";
+
+    grabContentRowsAsTable($query);
+
+  } else {
+    $error = "Table must be selected.";
+  }
+
+}
+
+/**
+ * deleteRows will delete the selected rows from the specified table
+ * @param  [string] $table: the selected table
+ * @param  [string] $IDType: the primary key of the table
+ * @param  [string[]] $rowsSelected: the array containing the $IDType
+ *  of the rows selected
+ */
+/******************* NEEDS TO BE TESTED *******************/
+function deleteRows($table, $IDType, $rowsSelected) {
+  $conn=mysqli_connect('localhost','unknown','security1#','social-site');
+
+  foreach($rowsSelected AS $rowSelected){
+    $deleteID = $rowSelected;
+    $sql = "DELETE FROM $table WHERE $IDType='$deleteID'";
+    $result = mysqli_query($conn, $sql);
+  }
+
+  mysqli_close($conn);
+}
+
+/**
+ * truncateTable will delete the data within a table,
+ *  but will not delete the table itself.
+ * @param  [string] $table: the table being truncated
+ */
+/******************* NEEDS TO BE TESTED *******************/
+function truncateTable($table) {
+  $conn=mysqli_connect('localhost','unknown','security1#','social-site');
+
+  $sql = "TRUNCATE TABLE $table";
+  $result = mysqli_query($conn, $sql);
+
+  mysqli_close($conn);
+}
+
+/**
+* purgeDB will truncate both tables.
+*/
+/******************* NEEDS TO BE TESTED *******************/
+function purgeDB() {
+  truncateTable("Users");
+  truncateTable("Content");
 }
 ?>

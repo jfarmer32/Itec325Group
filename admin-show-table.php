@@ -9,10 +9,8 @@ error_reporting(E_ALL);
 require_once("project-functions.php");
 
 $title = "Admin Page";
-$body = "This is the Admin Control Station. To view information:
-              First select the desired table,
-              then select applicable filters,
-              finally submit your query to the database by pressing 'Pull Rows'.";
+$body = tableHeader(array("Username", "Password", "profilePicture", "isAdmin", "isUserRestricted"));
+$currentTable = $_GET['table'];
 ?>
 <html>
   <head>
@@ -43,12 +41,12 @@ $body = "This is the Admin Control Station. To view information:
     <form id="tableForm" onsubmit="confirmPull()" method="get">
     <div class="adminGridContainer">
       <div class="custom-select">
-        <?php echo dropdown("table", array("Users", "Content"), "Select Table:"); ?>
+        <?php echo dropdown("table", array("Users", "Content"), "[Select Table]"); ?>
       </div>
       <div class="custom-select">
         <?php echo dropdown("showOnly",
                             array("Only Admin", "Only Restricted", "All data"),
-                            "Include data:"); ?>
+                            "Include which data?"); ?>
       </div>
       <div class="custom-select">
         <?php echo dropdown("filterByAge",
@@ -61,9 +59,27 @@ $body = "This is the Admin Control Station. To view information:
       <div style="padding-top: 15px;">
         <input type="submit" name="adminSubmit" value="Pull Rows">
       </div>
-      <!--
+    </div>
+
+    <form id="deleteForm" onsubmit="confirmDelete()" method="post">
+
+    <div class="middleAdminContainer">
+        <table class="adminTable"><?php echo $body ?><tr><td>1</td><td>3</td><td>5</td><td>7</td><td>9</td></tr></table>
+    </div>
+
+    <div class="bottomWMiddleAdminContainer">
       <div>
         <input type="submit" name="delete" value="Delete Row(s)">
+      </div>
+      <div class = "label">
+        <h2>Database maintainence:</h2>
+      </div>
+      <div>
+        <?php
+          echo radioTable("Change table",
+                          array("Users", "Content"),
+                          array("changeTable" => array("Users", "Content")));
+        ?>
       </div>
       <div>
         <input type="submit" name="reset" value="Reset Table">
@@ -71,11 +87,9 @@ $body = "This is the Admin Control Station. To view information:
       <div>
         <input type="submit" name="purge" value="Purge DB">
       </div>
-      -->
     </div>
-    <div class="bottomAdminContainer">
-        <?php echo $body ?>
-    </div>
+
     </form>
+  </form>
   </body>
 </html>
