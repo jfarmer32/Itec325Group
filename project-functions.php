@@ -6,7 +6,6 @@ Last edited by: Justin Farmer
 Purpose: provide utility functions for the grid-link project
 */
 error_reporting(E_ALL);
-
 /* AsAttrs takes in an array of strings (each key is also a string)
 *   and returns one string that is the attribute-value pairs seperated by an
 *   "=", with the values in 'single quotes'.
@@ -428,10 +427,18 @@ function contentPane($links=false, $images=false, $debug=false)
     $htmlSTR.=makeGridElement($row['profilePicture']);
     $query2="SELECT * FROM content WHERE User='".$row['Username']."'";
     $results2=mysqli_query($conn,$query2);
+    $contentLimiter=0;
     while ($row2=mysqli_fetch_assoc($results2))
     {
-      $htmlSTR.=spacer();
-      $htmlSTR.=makeGridElement($row2['Image'],$row2['Hyperlink']);
+      if ($contentLimiter < 6 && $row2['isContentRestricted']!=1 )
+      {
+        $htmlSTR.=spacer();
+        $htmlSTR.=makeGridElement($row2['Image'],$row2['Hyperlink']);
+        $contentLimiter=$contentLimiter+1;
+      }
+      else {
+        //don't make a content pane
+      }
     }
     $htmlSTR.="<br/>";
   }
