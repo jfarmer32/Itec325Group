@@ -1,7 +1,7 @@
 /*
 Group: require_once(teamname.php);
-Last edited: 04/11/2019 (V1.0)
-Last edited by: Joe Sullivan
+Last edited: 05/01/2019 (V1.2)
+Last edited by: Justin Farmer
 Purpose: This is a file containing javascript functions for our project.
 */
 

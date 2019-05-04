@@ -1,9 +1,9 @@
 <?php
 /*
 Group: require_once(teamname.php);
-Last edited: 05/03/2019 (V1.7)
+Last edited: 05/03/2019 (V1.0.1)
 Last edited by: Justin Farmer
-Purpose: This is the Admin (Show-Table)Page, where admin can view, add to, and modify
+Purpose: This is the Admin (DB-maintenance)Page, where admin can view, add to, and modify
          the database.
 */
 session_start();
@@ -15,9 +15,13 @@ if(!isset($_SESSION["active_session"]) || $_SESSION["active_session"] !== true)
 {
   header("location: index.php");
 }
+$User = $_POST
 */
 $title = "Admin Page";
-
+$body = "This is the Admin Control Station. To view information:\n"
+           .  " First select the desired table,\n"
+           .  " Then select applicable filters, \n"
+           .  " Finally submit your query to the database by pressing 'Pull Rows'.\n";
 ?>
 <html>
   <head>
@@ -42,30 +46,28 @@ $title = "Admin Page";
                                                                 "menu")))));
                            ?>
     <?php  echo divWithNestedDivs("aboveContentLeft",
-                                  array("active" => "Homepage",
-                                        "pageLink" => hyperlink("admin-show-table.php",
-                                                                "View by Table",
-                                                                "pageTab"),
-                                        "pageLink2" => hyperlink("admin-db-maintenance.php",
-                                                                 "Database Maintenance",
-                                                                 "pageTab"))) ?>
+                                  array("pageLink"=> hyperlink("admin-page.php",
+                                                               "Homepage",
+                                                               "pageTab"),
+                                        "pageLink2" => hyperlink("admin-show-table.php",
+                                                                 "View by Table",
+                                                                 "pageTab"),
+                                        "active" => "Database Maintenance")) ?>
 
     <div class="aboveContentRight" id="time"></div>
 
-    <div class="adminHomepage">
-      <?php
-      echo asUL("hpContent",
-                array("To view data:",
-                      "  • First navigate to View by Table",
-                      "  • Then select table and add applicable filters",
-                      "  • Finally submit your query to the database by pressing 'Pull Rows'"));
-      echo asUL("hpContent",
-                array("To perform Database Maintenance:",
-                      "  • First navigate to Database Maintenance",
-                      "  • Then select table to be reset and press 'Reset Table'",
-                      "  • Or reset all tables by pressing 'PurgeDB'"));
-      ?>
+    <form id="dbMForm" onsubmit="confirmDelete()" method="post">
+    <div class="dbMaintenance">
+      <div class="custom-select">
+        <?php echo dropdown("table", array("Users", "Content"), "[Select Table]"); ?>
+      </div>
+      <div>
+        <input type="submit" name="reset" value="Reset Table">
+      </div>
+      <div>
+        <input type="submit" name="purge" value="Purge DB">
+      </div>
     </div>
-
+    </form>
   </body>
 </html>

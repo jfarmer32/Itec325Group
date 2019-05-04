@@ -1,16 +1,22 @@
 <?php
 /*
 Group: require_once(teamname.php);
-Last edited: 03/27/2019 (V1.2)
+Last edited: 05/03/2019 (V1.5)
 Last edited by: Justin Farmer
-Purpose: This is the Admin Page, where admin can do admin things
+Purpose: This is the Admin (Home)Page, where admin can view, add to, and modify
+         the database.
 */
+session_start();
 error_reporting(E_ALL);
-require_once("project-functions.php");
 
+require_once("project-functions.php");
+/*
+if(!isset($_SESSION["active_session"]) || $_SESSION["active_session"] !== true)
+{
+  header("location: index.php");
+}
+*/
 $title = "Admin Page";
-$body = tableHeader(array("Username", "Password", "profilePicture", "isAdmin", "isUserRestricted"));
-$currentTable = $_GET['table'];
 ?>
 <html>
   <head>
@@ -22,19 +28,26 @@ $currentTable = $_GET['table'];
   <body onload="loadScripts()">
     <?php echo makeHeader(array("left" => makeImgGrid("square.jpeg", 11, 6),
                                 "center" => "<h1>Grid-Links</h1>",
-                                "right" => asUL(array(hyperlink("#",
+                                "right" => asUL("headerMenu",
+                                                array(hyperlink("#",
                                                                 "Help",
                                                                 "menu",
                                                                 array("id" => "adminHelp", "onclick" => "adminAlert()")),
                                                       hyperLink("index.php",
                                                                 "Return",
                                                                 "menu"),
-                                                      hyperLink("https://www.w3schools.com/css/css_link.asp",
+                                                      hyperLink("logout.php",
                                                                 "Logout",
                                                                 "menu")))));
                            ?>
-
-    <div class="aboveContentLeft">Admin</div>
+    <?php  echo divWithNestedDivs("aboveContentLeft",
+                                  array("pageLink" => hyperlink("admin-page.php",
+                                                                      "Homepage",
+                                                                      "pageTab"),
+                                        "active" => "View by Table",
+                                        "pageLink2" => hyperlink("admin-db-maintenance.php",
+                                                                 "Database Maintenance",
+                                                                 "pageTab"))) ?>
 
     <div class="aboveContentRight" id="time"></div>
 
@@ -71,25 +84,7 @@ $currentTable = $_GET['table'];
       <div>
         <input type="submit" name="delete" value="Delete Row(s)">
       </div>
-      <div class = "label">
-        <h2>Database maintainence:</h2>
-      </div>
-      <div>
-        <?php
-          echo radioTable("Change table",
-                          array("Users", "Content"),
-                          array("changeTable" => array("Users", "Content")));
-        ?>
-      </div>
-      <div>
-        <input type="submit" name="reset" value="Reset Table">
-      </div>
-      <div>
-        <input type="submit" name="purge" value="Purge DB">
-      </div>
     </div>
-
-    </form>
   </form>
   </body>
 </html>

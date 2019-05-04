@@ -1,10 +1,11 @@
 <?php
 /*
 Group: require_once(teamname.php);
-Last edited: 03/27/2019 (V1.2)
+Last edited: 05/03/2019 (V1.6)
 Last edited by: Justin Farmer
 Purpose: provide utility functions for the grid-link project
 */
+
 error_reporting(E_ALL);
 /* AsAttrs takes in an array of strings (each key is also a string)
 *   and returns one string that is the attribute-value pairs seperated by an
@@ -136,14 +137,19 @@ function makeHeader( $contents )
 * @param  [array] $listItems the array containing the list items
 * @return [string] The string containing HTML code for an unordered list
 */
-function asUL($listItems)
+function asUL($class = "", $listItems)
 {
-  $liSoFar = "";
+  if($class === "") {
+    $openUL = "<ul>";
+  } else {
+    $openUL = "<ul class='$class'>";
+  }
 
+  $liSoFar = "";
   foreach($listItems AS $listItem)
   $liSoFar .= "  <li>$listItem</li>\n";
 
-  return "<ul>\n$liSoFar</ul>";
+  return "$openUL\n$liSoFar</ul>";
 }
 
 /** Crude potential grid function
@@ -676,4 +682,71 @@ function purgeDB() {
   truncateTable("Users");
   truncateTable("Content");
 }
+
+/**
+ * timeout function will log a user out after 10 minutes of inactivity
+ */
+ function timeout() {
+
+   session_start();
+   if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 600)) {
+     // request 10 minates ago
+     session_destroy();
+     session_unset();
+   }
+   $_SESSION['LAST_ACTIVITY'] = time();
+ }
+
+/**
+ * login is used to log a user into their profile, Users will be redirected to their
+ * homepage, admin will be directed to the admin controls page.
+ * @return [String] $error: the error that has occured.
+ */
+ function login() {
+   session_start();
+   $error = "No error";
+
+   if(isset($_POST['login']))
+     if (empty($_POST['Username']) || empty($_POST['Password'])) {
+       $error = "Username or Password is Blank";
+     } else {
+       $Username = $_POST['Username'];
+       $Password = $_POST['Password'];
+
+       $conn=mysqli_connect('localhost','unknown','security1#','social-site');
+
+       $Username = htmlSpecialChars($Username);
+       $Password = htmlSpecialChars($Password);
+
+       $query = "SELECT * from Users where Password='$Password' AND Username='$Username'";
+       $result = mysqli_query($conn, $query);
+
+       $row=mysqli_fetch_assoc($result);
+
+       $count=mysqli_num_rows($row);
+
+       $Stored_Password = $row['Password'];
+       $isAdmin = $row['isAdmin'];
+
+       if ($rows === 1) {
+         $comparePWs = strcmp($Password, $Stored_Password);
+
+         if($comparePWs === 0) {
+           $_SESSION['active_session'] = true;
+           $_SESSION['login_user']=$_POST['Username'];
+
+           ($isAdmin === 1)
+            ? header("location: admin-page.php")
+            : header("location: user-page.php");
+         } else {
+           $error = "Username or Password is invalid";
+         }
+       } else {
+         $error = "Username or Password is invalid";
+       }
+       mysqli_close($ServerConnection);
+     }
+
+     return $error;
+ }
 ?>
