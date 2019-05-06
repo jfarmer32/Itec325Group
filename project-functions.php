@@ -1,7 +1,7 @@
 <?php
 /*
 Group: require_once(teamname.php);
-Last edited: 05/03/2019 (V1.6)
+Last edited: 05/05/2019 (V1.7)
 Last edited by: Justin Farmer
 Purpose: provide utility functions for the grid-link project
 */
@@ -42,7 +42,9 @@ function hyperlink($url, $linkTxt, $class, $addAttrs = array()) {
   $linkTxt = $url;
 
   if(sizeof($addAttrs) !== 0)
-  $attrs = asAttrs($addAttrs);
+    $attrs = asAttrs($addAttrs);
+  else
+    $attrs = "";
 
   return "<a class='$class' href='$url' $attrs>$linkTxt</a>";
 }
@@ -550,95 +552,153 @@ function grabContentRowsAsTable($query) {
 }
 
 /**
+* formUserQuery forms the SELECT query for the Users table from
+*   the given form information.
+* @param  [String] $show: the data to be shown
+* @param  [String] $userEntered: the user entered
+* @return [String] $query: the formed query including filters
+*/
+function formUserQuery($show, $userEntered) {
+  $pullOnly = "";
+  $user = "";
+  $query = "SELECT * FROM Users";
+
+  if($show === "Only Admin") {
+    $pullOnly = " WHERE isAdmin = 1";
+  } else if($show === "Only Admin") {
+    $pullOnly = " WHERE isUserRestricted = 1";
+  } else {
+    $pullOnly = "";
+  }
+
+  if($userEntered != "" && $pullOnly ===  "") {
+    $user = " WHERE User = $userEntered";
+  } else if($userEntered != "" && $pullOnly != "") {
+    $user = " AND User = $userEntered";
+  } else {
+    $user = "";
+  }
+
+  $query .= $pullOnly . $user;
+
+  return $query;
+}
+
+/**
+ * formContentQuery forms the SELECT query for the Content table from
+ *   the given form information.
+ * @param  [String] $show: the data to be shown
+ * @param  [String] $filter: the age filter selected
+ * @param  [String] $userEntered: the user entered
+ * @return [String] $query: the formed query including filters
+ */
+function formContentQuery($show, $filter, $userEntered) {
+  $pullOnly = "";
+  $user = "";
+  $ageFilter = "";
+
+  $query = "SELECT * FROM Content";
+
+  $timeFrame = "";
+  $timeAmnt = 0;
+
+  if ($filter === "5 years") {
+    $timeFrame = "YEAR";
+    $timeAmnt = 5;
+  } else if($filter === "1 year") {
+    $timeFrame = "YEAR";
+    $timeAmnt = 1;
+  } else if($filter === "6 months") {
+    $timeFrame = "MONTH";
+    $timeAmnt = 6;
+  } else if($filter === "1 month") {
+    $timeFrame = "MONTH";
+    $timeAmnt = 1;
+  } else if($filter === "1 week") {
+    $timeFrame = "DAY";
+    $timeAmnt = 7;
+  } else if($filter === "24 hours") {
+    $timeFrame = "DAY";
+    $timeAmnt = 1;
+  } else {
+    $timeFrame = "YEAR";
+    $timeAmnt = 10;
+  }
+
+  $ageFilter = " WHERE DATEDIFF($timeFrame, ContentDate, GetDate()) < $timeAmnt ";
+
+  if($show === "Only Admin") {
+    $pullOnly = " AND isAdmin = 1";
+  } else if($show === "Only Restricted") {
+    $pullOnly = " AND isContentRestricted = 1";
+  } else {
+    $pullOnly = "";
+  }
+
+  if($userEntered != "") {
+    $user = " AND User=$userEntered";
+  } else {
+    $user = "";
+  }
+
+  $query .= "$ageFilter$pullOnly$user";
+
+  return $query;
+}
+
+/**
  * getTableRows will GET table rows from the DB on submit, using the info
  *   provided at tableForm (This function uses $_GET).
- * Instead of returning the table rows, this function will call either,
- *  grabContentRowsAsTable or grabUserRowsAsTable, which will return the
- *  desired table.
+ * Instead of returning the rows as a set, this function will call either
+ *  grabContentRowsAsTable, or grabUserRowsAsTable, which will return the
+ *  desired rows as a table.
  */
 /******************* NEEDS TO BE TESTED *******************/
 function getTableRows() {
+
+  if(!empty($_GET['adminSubmit'])) {
   $table = $_GET['table'];
   $show = $_GET['showOnly'];
+  $filter = $_GET['filterByAge'];
+  $userEntered = $_GET['userEntered'];
+  $pullOnly = "";
+  $user = "";
 
   if($table === "Users") {
-
-    $query = "SELECT * FROM Users";
-
-    $pullOnly = "";
-
-    if($show === "Only Admin") {
-      $query .= " WHERE isAdmin = 1";
-    } else if($show === "Only Admin") {
-      $query .= " WHERE isUserRestricted = 1";
-    } else {
-      $query .= "";
-    }
-
-    if($userSelected != "") {
-      $query = "SELECT * FROM Users WHERE User=$userSelected";
-    }
-
+    $query = formUserQuery($show, $userEntered);
     grabUserRowsAsTable($query);
 
   } else if($table === "Content") {
-
-    $query = "SELECT * FROM Content";
-
-    $timeFrame = "";
-    $timeAmnt = 0;
-    $filter = $_GET['filterByAge'];
-
-    if ($filter === "5 years") {
-      $timeFrame = "YEAR";
-      $timeAmnt = 5;
-    } else if($filter === "1 year") {
-      $timeFrame = "YEAR";
-      $timeAmnt = 1;
-    } else if($filter === "6 months") {
-      $timeFrame = "MONTH";
-      $timeAmnt = 6;
-    } else if($filter === "1 month") {
-      $timeFrame = "MONTH";
-      $timeAmnt = 1;
-    } else if($filter === "1 week") {
-      $timeFrame = "DAY";
-      $timeAmnt = 7;
-    } else if($filter === "24 hours") {
-      $timeFrame = "DAY";
-      $timeAmnt = 1;
-    } else {
-      $timeFrame = "YEAR";
-      $timeAmnt = 10;
-    }
-
-    $ageFilter = " WHERE DATEDIFF($timeFrame, ContentDate, GetDate()) < $timeAmnt";
-
-    $show = $_GET['showOnly'];
-    $pullOnly = "";
-
-    if($show === "Only Admin") {
-      $pullOnly = "AND isAdmin = 1";
-    } else if($show === "Only Admin") {
-      $pullOnly = "AND isContentRestricted = 1";
-    } else {
-      $pullOnly = "";
-    }
-
-    if($userSelected != "") {
-      $user = "AND User=$userSelected";
-    }
-
-    $query .= "$ageFilter $show $user";
-
+    $query = formContentQuery($show, $filter, $userEntered);
     grabContentRowsAsTable($query);
 
   } else {
     $error = "Table must be selected.";
   }
+} else {
 
+  return "<tr><th>Select table, data, and age filter as applicable, then press 'Pull Rows'</th></tr>";
+}
 }
 
+/**
+ * getIDType will get the IDtype for the given table
+ * @param  [String] $table: the selected table
+ * @return [String] $IDType: the IDType for the selected table
+ */
+function getIDType( $table ) {
+  $IDType = "";
+
+  if($table === "Users") {
+    $IDType = "Username";
+  } else if($table === "Content") {
+    $IDType = "ContentID";
+  } else {
+    $error = "Table must be pulled!";
+  }
+
+  return $IDType;
+}
 /**
  * deleteRows will delete the selected rows from the specified table
  * @param  [string] $table: the selected table
@@ -647,7 +707,11 @@ function getTableRows() {
  *  of the rows selected
  */
 /******************* NEEDS TO BE TESTED *******************/
-function deleteRows($table, $IDType, $rowsSelected) {
+function deleteRows( $rowsSelected ) {
+  $table = $_GET['table'];
+
+  $IDType = getIDType($table);
+
   $conn=mysqli_connect('localhost','unknown','security1#','social-site');
 
   foreach($rowsSelected AS $rowSelected){
@@ -699,7 +763,7 @@ function purgeDB() {
 
 /**
  * login is used to log a user into their profile, Users will be redirected to their
- * homepage, admin will be directed to the admin controls page.
+ * homepage, admin will be directed to the admin controls homepage.
  * @return [String] $error: the error that has occured.
  */
  function login() {
@@ -738,6 +802,7 @@ function purgeDB() {
            ($isAdmin === 1)
             ? header("location: admin-page.php")
             : header("location: user-page.php");
+
          } else {
            $error = "Username or Password is invalid";
          }

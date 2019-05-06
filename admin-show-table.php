@@ -1,15 +1,16 @@
 <?php
 /*
 Group: require_once(teamname.php);
-Last edited: 05/03/2019 (V1.5)
+Last edited: 05/05/2019 (V1.5)
 Last edited by: Justin Farmer
-Purpose: This is the Admin (Home)Page, where admin can view, add to, and modify
+Purpose: This is the Admin (Show-Table)Page, where admin can view, add to, and modify
          the database.
 */
 session_start();
 error_reporting(E_ALL);
 
 require_once("project-functions.php");
+require_once("project-validation.php");
 /*
 if(!isset($_SESSION["active_session"]) || $_SESSION["active_session"] !== true)
 {
@@ -17,6 +18,8 @@ if(!isset($_SESSION["active_session"]) || $_SESSION["active_session"] !== true)
 }
 */
 $title = "Admin Page";
+$tableRows = getTableRows();
+$errors = addErrorToPage();
 ?>
 <html>
   <head>
@@ -26,7 +29,7 @@ $title = "Admin Page";
   </head>
 
   <body onload="loadScripts()">
-    <?php echo makeHeader(array("left" => makeImgGrid("square.jpeg", 11, 6),
+    <?php echo makeHeader(array("left" => makeImgGrid("./images/square.jpeg", 11, 6),
                                 "center" => "<h1>Grid-Links</h1>",
                                 "right" => asUL("headerMenu",
                                                 array(hyperlink("#",
@@ -51,7 +54,7 @@ $title = "Admin Page";
 
     <div class="aboveContentRight" id="time"></div>
 
-    <form id="tableForm" onsubmit="confirmPull()" method="get">
+    <form id="tableForm" action="" method="get">
     <div class="adminGridContainer">
       <div class="custom-select">
         <?php echo dropdown("table", array("Users", "Content"), "[Select Table]"); ?>
@@ -67,24 +70,24 @@ $title = "Admin Page";
                             "All content from the past:"); ?>
       </div>
       <div>
-        <input type="text" name="userSelected" placeholder="Enter User if needed">
+        <input type="text" name="userEntered" placeholder="Enter User if needed">
       </div>
       <div style="padding-top: 15px;">
-        <input type="submit" name="adminSubmit" value="Pull Rows">
+        <input id="adminSubmit" type="submit" name="adminSubmit" value="Pull Rows">
       </div>
     </div>
-
-    <form id="deleteForm" onsubmit="confirmDelete()" method="post">
-
+    </form>
+    <form id="deleteForm" action="" onsubmit="confirmDelete()" method="post">
     <div class="middleAdminContainer">
-        <table class="adminTable"><?php echo $body ?><tr><td>1</td><td>3</td><td>5</td><td>7</td><td>9</td></tr></table>
+        <table class="adminTable"><?php echo $tableRows ?></table>
     </div>
 
     <div class="bottomWMiddleAdminContainer">
       <div>
-        <input type="submit" name="delete" value="Delete Row(s)">
+        <input id="delete" type="submit" name="delete" value="Delete Row(s)">
       </div>
     </div>
-  </form>
+    </form>
+    <?php echo $errors ?>
   </body>
 </html>

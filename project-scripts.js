@@ -115,9 +115,17 @@ function adminAlert() {
         + "click \'Return\', or click \'Logout\'.");
 }
 
-function confirmPull() {
-  if(confirm ("Are you sure you would like to pull rows from the database?")) {
-    document.getElementById("tableForm").action = "admin-show-table.php";
+function confirmDelete() {
+  if(confirm ("This will delete all the selected rows.\n"
+            + "Do you wish to proceed?")) {
+    document.getElementById("deleteForm").action = "admin-show-table.php";
+  }
+}
+
+function confirmTruncate() {
+  if(confirm ("This will delete all the data from the selected table(s).\n"
+            + "Do you wish to proceed?")) {
+    document.getElementById("dbMForm").action = "admin-db-maintenance.php";
   }
 }
 

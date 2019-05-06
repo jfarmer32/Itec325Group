@@ -20,7 +20,7 @@ body {
   margin: 0px;
   padding:0px;
   font-size: 30px;
-  font-family: courier;
+  min-width: 800px;
 }
 
 input[type=submit] { /* <---- Input of Type Submit */
@@ -34,7 +34,7 @@ input[type=submit] { /* <---- Input of Type Submit */
   font-family: courier;
 }
 
-input[type=submit]:hover:not(.active){ /* <---- Input of Type Submit not hover */
+input[type=submit]:hover:not(.active) { /* <---- Input of Type Submit not hover */
 	background-color: #DC143C;
 	border: 1px solid #FFF8E7;
 }
@@ -44,9 +44,15 @@ input[type=text] {
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px groove #0058e6;
+  border-radius: 7px;
   box-sizing: border-box;
+  font-size: 15px;
+  color: black;
+}
+
+form {
+  margin: 0px;
 }
 /*
 ul {
@@ -57,17 +63,16 @@ ul {
   padding-left: 50px;
 }
 */
-li {
-  padding: 3px;
-}
-
 a {
   color: inherit;
   text-decoration: none;
 }
 
+li {
+  padding: 3px;
+}
+
 h1 {
-  font-family: courier;
   text-shadow: 3px 3px black;
   color: darkgray;
   text-align: center;
@@ -84,14 +89,36 @@ h2 {
 
 th, td {
   text-align: center;
-  color: #FFF8E7;;
+  color: #FFF8E7;
   font-size: 15px;
-  font-family: courier;
   text-decoration: none;
-  padding: 0px;
   margin: 0px;
+  padding: 5px;
+  background-color: #0058e6;
+  border: 1px groove #001133;
+}
+/***************************************************/
+/* error classes */
+.error {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 0;
+  width: auto;
+  height: auto;
+  border: 3px groove #FFF8E7;
+  background-color: crimson;
+  border-top-right-radius: 15px;
 }
 
+ul.error {
+  list-style: dot;
+  font-size: 20px;
+}
+
+.noError {
+  display: none;
+}
 /***************************************************/
 /* header classes */
 .header { /* Wrapper */
@@ -351,12 +378,6 @@ a.menu:hover {
   padding: auto;
 }
 
-.bottomWMiddleAdminContainer > table, th, td {
-  padding: 5px;
-  background-color: #0058e6;
-  border: 1px solid #001133;
-}
-
 /******************************************/
 /* Grid Image */
 
@@ -499,11 +520,13 @@ a.menu:hover {
     height: 0px;
   }
 }
+
 @media only screen and (max-width: 900px) {
   .aboveContentRight {
     display: none;
   }
 }
+
 @media only screen and (max-width: 800px) {
   .center {
       float: left;
