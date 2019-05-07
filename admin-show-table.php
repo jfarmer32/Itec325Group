@@ -92,7 +92,7 @@ if(!empty($_POST['modify'])) {
       </div>
     </div>
     </form>
-    <form id="deleteForm" action="" onsubmit="confirmDelete()" method="post">
+    <form id="deleteForm" action="" onsubmit="confirmModify()" method="post">
     <div class="middleAdminContainer">
         <table class="adminTable"><?php echo ($errors === false) ? $tableRows : $tableError; ?></table>
     </div>
