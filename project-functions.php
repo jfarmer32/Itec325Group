@@ -700,6 +700,52 @@ function getIDType( $table ) {
 }
 
 /**
+ * getRestrType will get the IDtype for the given table
+ * @param  [String] $table: the selected table
+ * @return [String] $restrType: the restrType for the selected table
+ */
+function getRestrType( $table ) {
+  $restrType = "";
+
+  if($table === "Users") {
+    $restrType = "isUserRestricted";
+  } else if($table === "Content") {
+    $restrType = "isContentRestricted";
+  } else {
+    $error = "Table must be pulled!";
+  }
+
+  return $restrType;
+}
+
+/**
+ * restrictRows will delete the selected rows from the specified table
+ * @param  [string[]] $rowsSelected: the array containing the $IDType
+ *  of the rows selected
+ */
+function restrictRows( $rowsSelected ) {
+  $table = $_GET['table'];
+  $count = 0;
+
+  $IDType = getIDType($table);
+  $restrType = getRestrType($table);
+
+  $conn=mysqli_connect('localhost','unknown','security1#','social-site');
+
+  foreach($rowsSelected AS $rowSelected) {
+    if($checkboxID !== 'table' && $checkboxID !== 'modify') {
+    $sql = "UPDATE $table SET $restrType = 1 WHERE $IDType='$rowSelected'";
+    $result = mysqli_query($conn, $sql);
+    if ($result) {$count++;}
+  }
+  }
+
+  mysqli_close($conn);
+
+  return $count;
+}
+
+/**
  * deleteRows will delete the selected rows from the specified table
  * @param  [string[]] $rowsSelected: the array containing the $IDType
  *  of the rows selected
@@ -711,13 +757,34 @@ function deleteRows( $rowsSelected ) {
 
   $conn=mysqli_connect('localhost','unknown','security1#','social-site');
 
-  foreach($rowsSelected AS $rowSelected){
-    $deleteID = $rowSelected;
-    $sql = "DELETE FROM $table WHERE $IDType='$deleteID'";
+  foreach($rowsSelected AS $rowSelected) {
+    if($checkboxID !== 'table' && $checkboxID !== 'modify') {
+    $sql = "DELETE FROM $table WHERE $IDType='$rowSelected'";
     $result = mysqli_query($conn, $sql);
   }
+ }
 
   mysqli_close($conn);
+}
+
+/**
+ * [modifyTable description]
+ * @return [type] [description]
+ */
+function modifyTable() {
+  if(!empty($_POST['modify'])) {
+    if($_POST['modify']==="Delete") {
+      $result = deleteRows($_POST);
+    } else if($_POST['modify']==="Restrict") {
+      $result = restrictRows($_POST);
+    } else {
+      $result = "Error has occured.";
+    }
+  } else {
+      $result = "Error has occured.";
+  }
+
+  return $result;
 }
 
 /**

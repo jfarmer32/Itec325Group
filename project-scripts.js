@@ -112,18 +112,18 @@ function passwordValidate(input) {
 function adminAlert() {
   alert ("This is the Admin Control page where Admin may update\, "
         + "modify\, and monitor the database. To return to the homepage\, "
-        + "click \'Return\', or click \'Logout\'.");
+        + "click \'Return\', or click \'Logout\' to logout.");
 }
 
-function confirmDelete() {
-  if(confirm ("This will delete all the selected rows.\n"
+function confirmModify() {
+  if(confirm ("This will modify all the selected rows.\n"
             + "Do you wish to proceed?")) {
     document.getElementById("deleteForm").action = "admin-show-table.php";
   }
 }
 
 function confirmTruncate() {
-  if(confirm ("This will delete all the data from the selected table(s).\n"
+  if(confirm ("This will delete table data.\n"
             + "Do you wish to proceed?")) {
     document.getElementById("dbMForm").action = "admin-db-maintenance.php";
   }

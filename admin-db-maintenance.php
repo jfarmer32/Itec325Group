@@ -71,7 +71,7 @@ if(!empty($_POST['reset'])) {
 
     <div class="aboveContentRight" id="time"></div>
 
-    <form id="dbMForm" action="" method="post">
+    <form id="dbMForm" onsubmit="confirmTruncate()" action="" method="post">
     <div class="dbMaintenance">
       <div class="custom-select">
         <?php echo dropdown("table", array("Users", "Content"), "[Select Table]"); ?>

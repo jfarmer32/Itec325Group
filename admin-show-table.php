@@ -22,6 +22,19 @@ $errors = addErrorToPage();
 $noErrors = "<div class='noError'></div>";
 $tableRows = getTableRows();
 $tableError = "<tr><td>An error has occured.</td></tr>";
+$result = modifyTable();
+
+$msg = "";
+
+(is_numeric($result))
+   ? $msg= "$result rows modified."
+   : $msg="Error occured on table operation.";
+
+if(!empty($_POST['modify'])) {
+  $msgFromDB = "<div class='dbMMessage'>$msg</div>";
+} else {
+  $msgFromDB = $noErrors;
+}
 ?>
 <html>
   <head>
@@ -86,7 +99,10 @@ $tableError = "<tr><td>An error has occured.</td></tr>";
 
     <div class="bottomWMiddleAdminContainer">
       <div>
-        <input id="delete" type="submit" name="delete" value="Delete Row(s)">
+        <input id="modify-delete" type="submit" name="modify" value="Delete">
+      </div>
+      <div>
+        <input id="nodify-restrict" type="submit" name="modify" value="Restrict">
       </div>
     </div>
     </form>

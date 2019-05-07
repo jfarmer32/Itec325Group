@@ -117,20 +117,20 @@ function validatePullRows( $formInfo ) {
      : $allErrors;
   }
 
-/* validateDelete : string[] -> string[]
+/* validateModify : string[] -> string[]
  * Given form information for `admin-show-table.php -> deleteForm',
  * return an array of all the error-messages,
  * indexed by the offending field.
  */
-function validateDelete( $deleteCBs ) {
-      if(sizeof($deleteCBs) < 3) {
+function validateModify( $checkboxIDs ) {
+      if(sizeof($checkboxIDs) < 3) {
         $allErrors = array("deleteCB"=>"No rows selected.");
       } else {
 
         $allErrors = array();
-        foreach($deleteCBs AS $deleteID => $deleteCB) {
-          if($deleteID !== 'table' && $deleteID !== 'delete') {
-            $allErrors = addCheckboxInvalidMessageToArray( $deleteCBs, $deleteID, $allErrors);
+        foreach($checkboxIDs AS $checkboxID => $deleteCB) {
+          if($checkboxID !== 'table' && $checkboxID !== 'delete') {
+            $allErrors = addCheckboxInvalidMessageToArray( $checkboxIDs, $checkboxID, $allErrors);
           }
         }
       }
@@ -169,7 +169,7 @@ function isInvalid( $formInfo, $formID ) {
   if($formID === "tableForm") {
     $allErrors = validatePullRows($formInfo);
   } else if($formID === "deleteForm") {
-    $allErrors = validateDelete($formInfo);
+    $allErrors = validateModify($formInfo);
   } else if($formID === "dbMForm") {
     $allErrors = validateDBM($formInfo);
   } else {
@@ -254,7 +254,7 @@ $errorList = "";
 
   if(isset($_GET['adminSubmit'])) {
     $errorDiv = handleSubmit($_GET, "tableForm");
-  } else if(isset($_POST['delete'])) {
+  } else if(isset($_POST['modify'])) {
     $errorDiv = handleSubmit($_POST, "deleteForm");
   } else if(isset($_POST['reset'])) {
     $errorDiv = handleSubmit($_POST, "dbMForm");
