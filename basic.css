@@ -205,6 +205,13 @@ a.menu:hover {
   padding-bottom: 0px;
 }
 
+.plain {
+  margin-top: 40px;
+  float: left;
+  margin-left: 5%;
+  padding: 5px;
+}
+
 .pageLink {
   background-color: #2176ff;
   border: 3px groove transparent;

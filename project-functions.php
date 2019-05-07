@@ -453,6 +453,51 @@ function contentPane($links=false, $images=false, $debug=false)
   mysqli_close($conn);
   return $htmlSTR;
 }
+
+function userContent($links=false, $images=false, $debug=false)
+{
+  $htmlSTR="";
+  $conn=mysqli_connect('localhost','unknown','security1#','social-site');
+  if ($debug)
+  {
+    echo "Connection ", ($conn ? "" : "NOT "), "established.<br />\n";
+    if (mysqli_connect_error()) { echo "Error details: ", mysqli_connect_error(), "\n"; }
+  }
+  //GET USER PROFILE PICS
+  $username = $_SESSION['login_user'];
+  $query="SELECT * FROM Content WHERE User='$username'";
+  $userQuery="SELECT * FROM Users WHERE User='$username'";
+
+  $results=mysqli_query($conn,$query);
+  $userResult=mysqli_query($conn,$userQuery);
+  
+  if ($debug)
+  {
+    echo "query was a ", ($results ? "success (though it might still have only 0 rows)" : "failure"), ".<br />\n";
+  }
+  while ($row=mysqli_fetch_assoc($results))
+  {
+    $htmlSTR.=makeGridElement($userQuery['profilePicture']);
+
+    $contentLimiter=0;
+    while ($row2=mysqli_fetch_assoc($results2))
+    {
+      if ($contentLimiter < 6 && $row2['isContentRestricted']!=1 )
+      {
+        $htmlSTR.=spacer();
+        $htmlSTR.=makeGridElement($row2['Image'],$row2['Hyperlink']);
+        $contentLimiter=$contentLimiter+1;
+      }
+      else {
+        //don't make a content pane
+      }
+    }
+    $htmlSTR.="<br/>";
+  }
+  mysqli_close($conn);
+  return $htmlSTR;
+}
+
 /* NEEDS DOCUMENTATION
 *
 */
