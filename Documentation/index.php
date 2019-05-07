@@ -17,9 +17,9 @@ Purpose: This page will serve as our landing page.
   <body>
     <p>
       <?php
-        echo makeHeader(array("left" => makeImgGrid("./images/square.jpeg", 11, 6),
+        echo makeHeader(array("left" => makeImgGrid("square.jpeg", 11, 6),
                               "center" => "<h1>Grid-Links</h1>",
-                              "right" => asUL("headerMenu",array(hyperlink("login.php",
+                              "right" => asUL(array(hyperlink("login.php",
                                                               "Login",
                                                               "menu"),
                                                     hyperlink("createAccount.php",

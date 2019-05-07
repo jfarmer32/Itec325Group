@@ -20,9 +20,9 @@
   <body>
   <p>
 	<?php
-		echo makeHeader(array("left" => makeImgGrid("square.jpeg", 11, 6),
+		echo makeHeader(array("left" => makeImgGrid("./images/square.jpeg", 11, 6),
 							 "center" => "<h1>Create Account</h1>",
-							 "right" => asUL(array(hyperlink("index.php",
+							 "right" => asUL("headerMenu",array(hyperlink("index.php",
 													"Home",
 													"menu"),
 										  hyperlink("login.php",
