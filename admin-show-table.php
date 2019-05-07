@@ -1,7 +1,7 @@
 <?php
 /*
 Group: require_once(teamname.php);
-Last edited: 05/05/2019 (V1.5)
+Last edited: 05/06/2019 (V1.6)
 Last edited by: Justin Farmer
 Purpose: This is the Admin (Show-Table)Page, where admin can view, add to, and modify
          the database.
@@ -18,8 +18,10 @@ if(!isset($_SESSION["active_session"]) || $_SESSION["active_session"] !== true)
 }
 */
 $title = "Admin Page";
-$tableRows = getTableRows();
 $errors = addErrorToPage();
+$noErrors = "<div class='noError'></div>";
+$tableRows = getTableRows();
+$tableError = "<tr><td>An error has occured.</td></tr>";
 ?>
 <html>
   <head>
@@ -79,7 +81,7 @@ $errors = addErrorToPage();
     </form>
     <form id="deleteForm" action="" onsubmit="confirmDelete()" method="post">
     <div class="middleAdminContainer">
-        <table class="adminTable"><?php echo $tableRows ?></table>
+        <table class="adminTable"><?php echo ($errors === false) ? $tableRows : $tableError; ?></table>
     </div>
 
     <div class="bottomWMiddleAdminContainer">
@@ -88,6 +90,6 @@ $errors = addErrorToPage();
       </div>
     </div>
     </form>
-    <?php echo $errors ?>
+    <?php echo ($errors === false) ? $noErrors : $errors; ?>
   </body>
 </html>

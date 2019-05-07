@@ -1,7 +1,7 @@
 <?php
 /*
 Group: require_once(teamname.php);
-Last edited: 05/05/2019 (V1.2)
+Last edited: 05/06/2019 (V1.2)
 Last edited by: Justin Farmer
 Purpose: provide validation functions for the grid-link project
 */
@@ -27,13 +27,13 @@ function stringInvalidMsg($str, $maxAllowedLength, $fieldRequired = true) {
   return ($problemsSoFar==="")  ?  false  :  $problemsSoFar;
 }
 
-/** numberInvalidMsg : string -> string-or-false
+/** dropDownInvalidMsg : string -> string-or-false
   * Returns an error message if dropdown has not been selected
   * ($msg === "Select One" || $msg === "")
   * Returns false if there is no error
   */
 function dropDownInvalidMsg($msg, $fieldRequired = true) {
-  return ($fieldRequired===true && $msg==="[Select Table]" || $msg==="")
+  return ($fieldRequired===true && $msg==="0" || $msg==="")
     ? "Must make a selection from dropdown menu.  "
     : false;
 }
@@ -123,13 +123,17 @@ function validatePullRows( $formInfo ) {
  * indexed by the offending field.
  */
 function validateDelete( $deleteCBs ) {
-    $allErrors = array();
+      if(sizeof($deleteCBs) < 3) {
+        $allErrors = array("deleteCB"=>"No rows selected.");
+      } else {
 
-    foreach($deleteCBs AS $deleteID => $deleteCB) {
-      if($deleteID !== 'table' && $deleteID !== 'delete') {
-        $allErrors = addCheckboxInvalidMessageToArray( $deleteCBs, $deleteID, $allErrors);
+        $allErrors = array();
+        foreach($deleteCBs AS $deleteID => $deleteCB) {
+          if($deleteID !== 'table' && $deleteID !== 'delete') {
+            $allErrors = addCheckboxInvalidMessageToArray( $deleteCBs, $deleteID, $allErrors);
+          }
+        }
       }
-    }
 
     return (sizeof($allErrors) === 0)
      ? false
@@ -144,7 +148,7 @@ function validateDelete( $deleteCBs ) {
 function validateDBM( $formInfo ) {
     $allErrors = array();
 
-    if($formInfo['reset']==="reset-table")
+    if($formInfo['reset']==="Reset Table")
       $allErrors = addDropdownInvalidMsgToArray( $formInfo, 'table', $allErrors);
 
     return (sizeof($allErrors) === 0)
@@ -187,14 +191,14 @@ function errorsAsList($errors) {
   global $errorsList;
 
   $openUL = "\n<ul class='error'>\n";
-  $lisSoFar = "";
+  $lisSoFar = "<li>Errors encountered:</li>\n";
   $closeUL = "</ul>\n";
 
   foreach($errors AS $loc => $error) {
     if(array_key_exists($loc, $errorsList)) {
       $lisSoFar .= "   <li>" . $errorsList[$loc] . "</li>\n";
     } else {
-      $lisSoFar .= "   <li>Unknown error at <$loc> : $error </li>\n";
+      $lisSoFar .= "   <li>Unknown error at $loc : $error </li>\n";
     }
   }
 
@@ -211,7 +215,7 @@ function errorsAsList($errors) {
  */
 function errorContainer($errorList) {
   return ($errorList === "")
-           ? "<div class = 'noError'>\n</div>\n"
+           ? false
            : "<div class = 'error'>\n$errorList</div>\n";
 }
 
@@ -235,24 +239,27 @@ function handleSubmit($formArray, $formID) {
 
   return $errorDiv;
 }
+
 /**
  * addErrorToPage, upon submission, will check which form was submitted and
  *  report any errors by returning the errors wrapped in a div. The div
  *  will be displayed at the bottom of the page and is displayed based on it's
- *  style (.error or .noError)
+ *  style (.error )
+ * Returns the errorDiv if an error occurs
+ * Returns false if no error has occured
  */
 function addErrorToPage() {
 $errorDiv = "";
 $errorList = "";
 
-  if(!empty($_GET['adminSubmit'])) {
+  if(isset($_GET['adminSubmit'])) {
     $errorDiv = handleSubmit($_GET, "tableForm");
-  } else if(!empty($_POST['delete'])) {
+  } else if(isset($_POST['delete'])) {
     $errorDiv = handleSubmit($_POST, "deleteForm");
-  } else if(!empty($_POST['reset'])) {
+  } else if(isset($_POST['reset'])) {
     $errorDiv = handleSubmit($_POST, "dbMForm");
   } else {
-    $errorDiv = errorContainer($errorList);
+    $errorDiv = false;
   }
 
   return $errorDiv;

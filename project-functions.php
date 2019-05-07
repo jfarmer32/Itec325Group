@@ -548,7 +548,7 @@ function grabContentRowsAsTable($query) {
 
   mysqli_close($conn);
 
-  return "<table>\n$tableRows\n</table>";
+  return "\n$tableRows\n";
 }
 
 /**
@@ -653,7 +653,6 @@ function formContentQuery($show, $filter, $userEntered) {
  *  grabContentRowsAsTable, or grabUserRowsAsTable, which will return the
  *  desired rows as a table.
  */
-/******************* NEEDS TO BE TESTED *******************/
 function getTableRows() {
 
   if(!empty($_GET['adminSubmit'])) {
@@ -699,14 +698,12 @@ function getIDType( $table ) {
 
   return $IDType;
 }
+
 /**
  * deleteRows will delete the selected rows from the specified table
- * @param  [string] $table: the selected table
- * @param  [string] $IDType: the primary key of the table
  * @param  [string[]] $rowsSelected: the array containing the $IDType
  *  of the rows selected
  */
-/******************* NEEDS TO BE TESTED *******************/
 function deleteRows( $rowsSelected ) {
   $table = $_GET['table'];
 
@@ -728,7 +725,6 @@ function deleteRows( $rowsSelected ) {
  *  but will not delete the table itself.
  * @param  [string] $table: the table being truncated
  */
-/******************* NEEDS TO BE TESTED *******************/
 function truncateTable($table) {
   $conn=mysqli_connect('localhost','unknown','security1#','social-site');
 
@@ -736,15 +732,42 @@ function truncateTable($table) {
   $result = mysqli_query($conn, $sql);
 
   mysqli_close($conn);
+
+  return $result;
 }
 
 /**
-* purgeDB will truncate both tables.
+* purgeDB will truncate both tables, returning false if an error has occured
 */
-/******************* NEEDS TO BE TESTED *******************/
 function purgeDB() {
-  truncateTable("Users");
-  truncateTable("Content");
+  $tb1result = truncateTable("Users");
+  $tb2result = truncateTable("Content");
+
+  return ($tb1result && $tb2result);
+}
+
+/**
+ * [resetDBorTable description]
+ * @return [String-or-boolean]$result:
+ * Returns String if top level error occurs.
+ * Returns false if error occured with db query
+ * Returns true if no error has occured
+ */
+function resetDBorTable() {
+  if(!empty($_POST['reset'])) {
+    if($_POST['reset'] === "Reset Table") {
+      $table = $_POST['table'];
+      $result = truncateTable($table);
+    } else if($_POST['reset'] === "Purge DB") {
+      $result = purgeDB();
+    } else {
+      $result = "Unknown input.";
+    }
+  } else {
+    $result = "No input.";
+  }
+
+  return $result;
 }
 
 /**

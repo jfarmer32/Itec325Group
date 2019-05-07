@@ -1,7 +1,7 @@
 <?php
 /*
 Group: require_once(teamname.php);
-Last edited: 05/05/2019 (V1.0.1)
+Last edited: 05/06/2019 (V1.3)
 Last edited by: Justin Farmer
 Purpose: This is the Admin (DB-maintenance)Page, where admin can view, add to, and modify
          the database.
@@ -19,6 +19,24 @@ if(!isset($_SESSION["active_session"]) || $_SESSION["active_session"] !== true)
 $User = $_POST
 */
 $title = "Database Maintenance";
+$errors = addErrorToPage();
+$result = resetDBorTable();
+$msg = "";
+
+if(!is_string($result)) {
+  ($result) ? $msg="Success" : $msg="Error occured on table operation.";
+} else {
+  $msg=$result;
+}
+
+$noErrors = "<div class='noError'></div>";
+
+if(!empty($_POST['reset'])) {
+  $msgFromDB = "<div class='dbMMessage'>$msg</div>";
+} else {
+  $msgFromDB = $noErrors;
+}
+
 ?>
 <html>
   <head>
@@ -53,7 +71,7 @@ $title = "Database Maintenance";
 
     <div class="aboveContentRight" id="time"></div>
 
-    <form id="dbMForm" onsubmit="confirmTruncate()" method="post">
+    <form id="dbMForm" action="" method="post">
     <div class="dbMaintenance">
       <div class="custom-select">
         <?php echo dropdown("table", array("Users", "Content"), "[Select Table]"); ?>
@@ -66,6 +84,7 @@ $title = "Database Maintenance";
       </div>
     </div>
     </form>
-    <?php echo addErrorToPage() ?>
+    <?php echo $msgFromDB ?>
+    <?php echo ($errors === false) ? $noErrors : $errors ?>
   </body>
 </html>

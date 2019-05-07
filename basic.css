@@ -1,14 +1,8 @@
 /*
 Group: require_once(teamname.php);
-Last edited: 05/03/2019 (V1.?)
+Last edited: 05/06/2019 (V1.?)
 Last edited by: Justin Farmer
 Purpose: This file contains all of the CSS for the website
-*
-*
-*
-*
-*
-* There's a lot of redundant CSS in here, I will clean it up over the weekend
 */
 * {
   color: #FFF8E7;
@@ -25,7 +19,7 @@ body {
 
 input[type=submit] { /* <---- Input of Type Submit */
 	background-color: #0058e6;
-  border: 1px solid #001133;
+  border: 1px groove #001133;
 	color: #FFF8E7;
 	padding: 5px;
 	font-size: 20px;
@@ -36,7 +30,7 @@ input[type=submit] { /* <---- Input of Type Submit */
 
 input[type=submit]:hover:not(.active) { /* <---- Input of Type Submit not hover */
 	background-color: #DC143C;
-	border: 1px solid #FFF8E7;
+	border: 1px groove #FFF8E7;
 }
 
 input[type=text] {
@@ -116,6 +110,10 @@ ul.error {
   font-size: 20px;
 }
 
+.error>li:first-child {
+  list-style: none;
+}
+
 .noError {
   display: none;
 }
@@ -126,7 +124,7 @@ ul.error {
   height:121px;
   overflow: hidden;
   background-color: #2176ff;
-  border-bottom: 3px solid #FFF8E7;
+  border-bottom: 3px ridge #FFF8E7;
 }
 
 .center {
@@ -148,8 +146,8 @@ ul.error {
     border-top-left-radius: 25%;
     border-bottom-left-radius: 25%;
     width: 12.5%;
-    border-left: 3px solid #FFF8E7;;
-    border-bottom: 3px solid #FFF8E7;;
+    border-left: 3px groove #FFF8E7;;
+    border-bottom: 3px groove #FFF8E7;;
     box-shadow: -1px -1px 10px grey;
     position: fixed;
     right: 0;
@@ -289,6 +287,19 @@ a.menu:hover {
   border-radius: 15px;
 }
 
+.dbMMessage {
+  border: 3px groove #FFF8E7;
+  width: 30%;
+  height: auto;
+  margin: auto;
+  padding: 5px;
+  margin-top: 40px;
+  background-color: #0058e6;
+  border-radius: 15px;
+  font-size: 20px;
+  text-align: center;
+}
+
 .adminHomepage {
   border: 3px groove #C0C0C0;
   padding: 10px;
@@ -322,7 +333,7 @@ a.menu:hover {
 .hpContent>li:first-child {
   font-size: 25px;
 }
-
+/*
 .bottomAdminContainer {
   border: 3px solid darkgray;
   background-color: #002266;
@@ -335,7 +346,7 @@ a.menu:hover {
   border-bottom-right-radius: 15px;
   margin-bottom: 10px;
 }
-
+*/
 .middleAdminContainer {
   border-left: 3px groove #C0C0C0;
   border-right: 3px groove #C0C0C0;
